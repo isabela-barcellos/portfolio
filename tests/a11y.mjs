@@ -47,9 +47,11 @@ let verificacoes = 0;
 for (const tema of ["light", "dark"]) {
   for (const largura of [360, 768, 1280]) {
     // Contexto A (com CSP): detecta violações e rolagem horizontal.
-    const ctxA = await browser.newContext({ viewport: { width: largura, height: 800 }, colorScheme: tema });
+    const ctxA = await browser.newContext({ viewport: { width: largura, height: 800 } });
     // Contexto B (CSP contornado só para injetar o axe): acessibilidade.
-    const ctxB = await browser.newContext({ viewport: { width: largura, height: 800 }, colorScheme: tema, bypassCSP: true });
+    const ctxB = await browser.newContext({ viewport: { width: largura, height: 800 }, bypassCSP: true });
+    // O tema vem da escolha salva pelo botão (o padrão do site é o escuro), não da preferência do sistema.
+    for (const c of [ctxA, ctxB]) await c.addInitScript((t) => { try { localStorage.setItem("tema", t); } catch {} }, tema);
     const a = await ctxA.newPage();
     const b = await ctxB.newPage();
     const violacoes = [];

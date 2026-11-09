@@ -1,12 +1,14 @@
-// Fonte do conteúdo do site. Espelha content/*.md (que é a versão para revisão).
+// Fonte do conteúdo do site (perfil, trajetória, competências). Os cases ficam em content/cases/*.md.
 export const perfil = {
   nome: "Isabela Barcellos Freire",
+  nomeCurto: "Isabela B. Freire", // barra do topo em telas estreitas
   titulo: "Desenvolvedora · IA Generativa",
   linhas: ["Front-end", "Agentes de IA", "Visão computacional"], // faixas curtas do hero (fatos, não slogan)
-  // Frase sugerida pelo Avaliador e aprovada pela Isabela (09/11/2026). Também vira a descrição do link compartilhado.
+  // Frase de posicionamento. Também vira a descrição do link compartilhado (meta e og:description).
   posicionamento: "Desenvolvo produtos com IA, da interface ao agente, e uso agentes para entregar código com qualidade.",
   linkedin: "https://www.linkedin.com/in/isabela-barcellos-freire/",
   github: "https://github.com/isabela-barcellos",
+  repositorio: "https://github.com/isabela-barcellos/portfolio", // código-fonte deste site
   email: "isabelabarcellos0812@gmail.com",
   foto: { alt: "Foto de Isabela Barcellos Freire sorrindo, com o crachá do evento NEXT" },
 };

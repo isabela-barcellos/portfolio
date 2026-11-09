@@ -1,6 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
 import SectionHeader from "../components/SectionHeader.astro";
+import Icon from "../components/Icon.astro";
+import { perfil } from "../data/site";
 
 // Texto escrito a partir do que aconteceu neste projeto. Descreve o método, sem publicar prompts.
 const etapas = [
@@ -22,7 +24,7 @@ const etapas = [
   },
   {
     id: "deploy", titulo: "Deploy",
-    texto: "O site está publicado na Vercel, no plano gratuito, e cada envio ao GitHub gera um deploy novo. A política de segurança de conteúdo e os cabeçalhos de segurança são aplicados na publicação, e o build falha se o verificador achar dado sensível. O repositório segue privado até eu revisar o histórico com um scanner de segredos.",
+    texto: "O site está publicado na Vercel, no plano gratuito, e cada envio ao GitHub gera um deploy novo. A política de segurança de conteúdo e os cabeçalhos de segurança são aplicados na publicação, e o build falha se o verificador achar dado sensível. O repositório é público e nasceu sem o histórico antigo, para não carregar dados pessoais de versões anteriores.",
   },
 ];
 
@@ -56,6 +58,15 @@ const aprendizados = [
           </li>
         ))}
       </ol>
+
+      <h2 style="margin-top: var(--space-8)">Código-fonte</h2>
+      <div class="pf-card" style="margin-top: var(--space-4)">
+        <p>O código deste site é público. Além das páginas, o repositório tem o que sustenta o método: um verificador que reprova a publicação se achar dado sensível, com 15 casos de teste, um teste de acessibilidade e de política de segurança, um README e uma decisão de arquitetura registrada (ADR).</p>
+        <p class="muted">O workflow de integração contínua existe, mas ainda não foi validado em execução no GitHub. Enquanto isso, os testes rodam na minha máquina e o verificador roda em cada build.</p>
+        <div class="pf-actions" style="margin-top: 0">
+          <a class="pf-btn pf-btn--primary" href={perfil.repositorio} rel="noopener"><Icon nome="github" tamanho={18} /> Ver o repositório</a>
+        </div>
+      </div>
 
       <h2 style="margin-top: var(--space-8)">O que eu levo disso</h2>
       <ul class="pf-prose" style="margin-top: var(--space-4)">

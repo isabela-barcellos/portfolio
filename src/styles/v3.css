@@ -1,0 +1,54 @@
+/* v3: identidade rosa sobre azul-noite (referência visual da Isabela). Só tokens; rosa como acento, não em tudo.
+   Brilho (glow) é estático e moderado; transições só com prefers-reduced-motion: no-preference. */
+
+/* ---------- Navegação flutuante em pílula ---------- */
+.pf-nav { background: transparent; border: 0; padding: var(--space-3) var(--space-3) 0; }
+.pf-nav .pf-container {
+  background: var(--surface-200); border: 1px solid var(--border); border-radius: 999px;
+  box-shadow: var(--shadow-pop); padding: 6px 8px 6px var(--space-5); max-width: var(--container-max);
+}
+.pf-nav .name { font-family: var(--mono); font-weight: 600; letter-spacing: -.02em; }
+.name__short { display: inline; }
+.name__full { display: none; }
+@media (min-width: 480px) { .name__short { display: none; } .name__full { display: inline; } }
+.pf-nav ul a { border-radius: 999px; }
+.pf-menu summary { border-radius: 999px; }
+.pf-menu ul { border-radius: var(--radius-lg); }
+.pf-nav__cta { display: none; }
+@media (min-width: 900px) { .pf-nav__cta { display: inline-flex; min-height: 44px; padding: 0 var(--space-5); } }
+
+/* ---------- Botões e pílulas ---------- */
+.pf-btn { border-radius: 999px; font-family: var(--mono); font-weight: 500; font-size: 14px; letter-spacing: .01em; }
+.pf-btn--primary { box-shadow: 0 0 24px var(--glow); }
+.pf-btn--secondary { border-color: var(--border-strong); }
+.pf-btn { white-space: nowrap; }
+@media (max-width: 559px) { .pf-hero .pf-actions:not(.pf-actions--social) .pf-btn { font-size: 13px; padding: 0 var(--space-2); } }
+.pf-tag, .pf-lines li, .pf-pill { border-radius: 999px; }
+.pf-iconbtn, .pf-theme, .pf-car__btn { border-color: var(--border-strong); }
+
+/* ---------- Faixa de tecnologias: degradê ameixa -> magenta (valores da referência) ---------- */
+.pf-strip { background: linear-gradient(90deg, var(--strip-a), var(--strip-b)); color: var(--strip-ink); }
+.pf-strip__pause { background: var(--strip-b); border-color: var(--strip-ink); color: var(--strip-ink); }
+
+/* ---------- Números em cartões com destaque rosa ---------- */
+.pf-stats li { background: var(--surface-200); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-5); box-shadow: var(--shadow-card); }
+.pf-stats .v { color: var(--brand-ink); text-shadow: 0 0 28px var(--glow); }
+
+/* ---------- Cartões: borda sutil e brilho rosa no hover ---------- */
+.pf-pcard, .pf-tile, .pf-acc details { border-color: var(--border); border-radius: var(--radius-lg); }
+@media (prefers-reduced-motion: no-preference) {
+  .pf-pcard, .pf-tile, .pf-btn--primary, .pf-stats li { transition: box-shadow .2s ease, border-color .2s ease; }
+}
+.pf-pcard:hover, .pf-tile:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 10px 30px var(--glow); }
+.pf-tile__ico { background: var(--brand-tint); }
+.pf-pcard__cover.pf-pcard__cover--text strong, .pf-banner strong { font-family: var(--mono); letter-spacing: -.03em; }
+/* Capas de texto: fundo ameixa escuro com título claro e ícone rosa (o rosa vivo fica só em botões e acentos) */
+.pf-pcard__cover.pf-pcard__cover--text, .pf-banner { background: var(--brand-tint); color: var(--ink); border-bottom: 3px solid var(--brand); }
+.pf-banner { border: 1px solid var(--border); border-bottom: 3px solid var(--brand); }
+.pf-pcard__cover--text .pf-icon, .pf-banner .pf-icon { color: var(--brand-ink); opacity: .55; }
+
+/* ---------- Rodapé ---------- */
+.pf-foot-links { display: inline-flex; flex-wrap: wrap; gap: var(--space-4) var(--space-5); }
+
+/* ---------- Títulos de seção ---------- */
+.pf-sh h2::before { content: ""; display: block; width: 40px; height: 3px; border-radius: 3px; background: var(--brand); margin-bottom: var(--space-3); }

@@ -8,7 +8,7 @@ Site: https://portifolio-six-pi-27.vercel.app
 
 - **Páginas:** Home, cinco cases (`/projetos/<slug>/`), "Como foi feito" e 404.
 - **Conteúdo separado do código:** cada case é um arquivo em `content/cases/*.md`, validado por um esquema (`src/content.config.ts`). `rascunho: true` tira o case do build.
-- **Design system:** tokens de cor, tipografia e espaçamento (`src/styles/global.css` e `v2.css`, com os tokens originais em `design-system/`), tema claro e escuro, textos e alvos de toque acessíveis.
+- **Design system:** tokens de cor, tipografia e espaçamento (`src/styles/`, com a documentação e os tokens em `design-system/`). **Tema escuro por padrão** (azul-noite com rosa como marca) e tema claro pelo botão do topo, com contraste conferido por cálculo e pelo teste de acessibilidade.
 - **Sem back-end e sem variáveis de ambiente.** Nada sensível entra no bundle.
 
 ## Rodar
@@ -27,12 +27,15 @@ npm run build && npm run test:a11y   # acessibilidade, rolagem horizontal e CSP
 npm test                   # os dois
 ```
 
-O teste de acessibilidade usa `playwright-core` e precisa de um Chrome/Chromium. Localmente, aponte `CHROME_PATH` para o seu Chrome. Na CI o Chromium é instalado pelo workflow.
+O teste de acessibilidade usa `playwright-core` e precisa de um Chrome/Chromium. Localmente, aponte `CHROME_PATH` para o seu Chrome.
+
+**Estado do CI:** o workflow (`.github/workflows/ci.yml`) roda esses mesmos passos, mas **ainda não rodou com sucesso**: o GitHub não chegou a iniciar o job, por uma restrição na conta da autora que ainda será resolvida. Até ficar verde, não há selo de CI neste repositório. Enquanto isso, os testes passam na máquina da autora e o verificador de vazamento roda em cada build da Vercel.
 
 ## Segurança e privacidade (o que o build garante)
 
 - **`npm run verificar`** roda no build da Vercel e **reprova a publicação** se encontrar: celular brasileiro, e-mail não autorizado, tokens (GitHub, AWS, `sk-`, JWT), chaves privadas, senhas em código, caminhos locais, EXIF em fotos, `<script>` embutido (o CSP o bloquearia) e comentários HTML publicados.
-- Dados pessoais específicos (telefone, bairro) **não ficam no código**: o verificador os lê de `_entrada-privada/padroes-privados.txt`, que está no `.gitignore`.
+- Dados pessoais específicos (telefone, bairro) **não ficam no código**: o verificador os lê de `_entrada-privada/padroes-privados.txt`, que está no `.gitignore`. Por isso, **na CI e em clones públicos valem só as regras genéricas**; os padrões pessoais só valem na máquina de quem tem esse arquivo.
+- O verificador procura por padrões: reduz o risco, mas não prova que não há dado sensível. Um scanner dedicado de segredos (por exemplo o gitleaks) deve rodar antes de cada publicação grande, como segunda camada.
 - **CSP restritiva e cabeçalhos de segurança** em `vercel.json` (`script-src 'self'`, sem iframes, sem câmera/microfone).
 - A decisão está registrada em [`docs/adr/0001-site-estatico-csp-e-verificacao.md`](docs/adr/0001-site-estatico-csp-e-verificacao.md).
 

@@ -1,8 +1,11 @@
 ---
 import "../styles/global.css";
 import "../styles/v2.css";
+import "../styles/v3.css";
 import Icon from "../components/Icon.astro";
-import { perfil } from "../data/site";
+import { perfil, mensagemContato } from "../data/site";
+
+const mailto = `mailto:${perfil.email}?subject=${encodeURIComponent(mensagemContato.assunto)}&body=${encodeURIComponent(mensagemContato.corpo)}`;
 
 interface Props { titulo?: string; descricao?: string }
 const { titulo, descricao = perfil.posicionamento || `${perfil.nome}, ${perfil.titulo}. Projetos, trajetória e processo.` } = Astro.props;
@@ -28,13 +31,16 @@ const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Po
     <script is:inline src="/theme.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
   </head>
   <body>
     <a class="skip" href="#conteudo">Ir para o conteúdo</a>
     <header class="pf-nav">
       <div class="pf-container">
-        <a class="name" href="/">{perfil.nome}</a>
+        <a class="name" href="/" aria-label={perfil.nome}>
+          <span class="name__full" aria-hidden="true">{perfil.nome}</span>
+          <span class="name__short" aria-hidden="true">{perfil.nomeCurto}</span>
+        </a>
         <div class="pf-nav__right">
           <nav aria-label="Principal">
             <details class="pf-menu">
@@ -48,6 +54,7 @@ const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Po
               </ul>
             </details>
           </nav>
+          <a class="pf-btn pf-btn--primary pf-nav__cta" href={mailto}>Falar comigo</a>
           <button type="button" class="pf-theme" data-theme-toggle aria-label="Alternar entre tema claro e escuro">
             <span class="pf-theme__sun"><Icon nome="sun" /></span>
             <span class="pf-theme__moon"><Icon nome="moon" /></span>
@@ -59,7 +66,10 @@ const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Po
     <footer>
       <div class="pf-container">
         <span>© {new Date().getFullYear()} {perfil.nome}</span>
-        <a class="pf-top" href="#">Voltar ao topo <Icon nome="arrow" tamanho={16} /></a>
+        <span class="pf-foot-links">
+          <a class="pf-top" href={perfil.repositorio} rel="noopener"><Icon nome="github" tamanho={16} /> Código-fonte</a>
+          <a class="pf-top" href="#">Voltar ao topo <Icon nome="arrow" tamanho={16} /></a>
+        </span>
       </div>
     </footer>
     <script>
@@ -72,8 +82,8 @@ const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Po
       const raiz = document.documentElement;
       const botao = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
       const escuroAgora = () => {
-        const t = raiz.getAttribute("data-theme");
-        return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        // O padrão do site é o tema escuro; só "light" (escolhido no botão) muda isso.
+        return raiz.getAttribute("data-theme") !== "light";
       };
       botao?.addEventListener("click", () => {
         const novo = escuroAgora() ? "light" : "dark";
