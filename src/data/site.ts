@@ -38,7 +38,7 @@ export const mensagemContato = {
 // Blocos curtos "IA generativa na prática": cada um vem de um fato do CV ou de um case.
 export const foco = [
   { icone: "bot", titulo: "Agente de vendas", linha: "Em produção, construído no Safra IA Week.", href: "/projetos/safra-ia-week/" },
-  { icone: "layout", titulo: "Design com IA + MCP", linha: "Tela e código no padrão, em 1 dia.", href: "/projetos/nibo-hackathon/" },
+  { icone: "layout", titulo: "Design com IA", linha: "Do chat à tela e ao código, em 1 dia.", href: "/projetos/nibo-hackathon/" },
   { icone: "eye", titulo: "Visão computacional", linha: "MediaPipe no aparelho, no ECOA.", href: "/projetos/ecoa/" },
   { icone: "workflow", titulo: "Agentes orquestrados", linha: "Maestri e Claude Code no dia a dia.", href: "/como-foi-feito/" },
 ];
