@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import Icon from "./Icon.astro";
+import { imagemDoCase } from "../data/imagens";
+
+// Card curto: capa (print ou título de impacto), selo, 1 linha. Detalhes só na página do case (um clique).
+interface Props { id: string; titulo: string; linha: string; selo?: string; capa?: string; capaAlt?: string; capaTexto?: string; icone?: string }
+const { id, titulo, linha, selo, capa, capaAlt, capaTexto, icone = "sparkles" } = Astro.props;
+---
+<article class="pf-pcard">
+  <div class:list={["pf-pcard__cover", !capa && "pf-pcard__cover--text"]}>
+    {capa
+      ? <Image src={imagemDoCase(id, capa)} alt={capaAlt ?? `Tela do projeto ${titulo}`} widths={[320, 480, 640]} sizes="(min-width: 1024px) 360px, (min-width: 640px) 45vw, 92vw" loading="lazy" />
+      : (<><strong>{capaTexto ?? titulo}</strong><Icon nome={icone} tamanho={72} /></>)}
+  </div>
+  <div class="pf-pcard__body">
+    {selo && <span class="pf-pill pf-pill--card">{selo}</span>}
+    <h3><a href={`/projetos/${id}/`}>{titulo}</a></h3>
+    <p>{linha}</p>
+    <span class="pf-more">Ver detalhes <Icon nome="arrow" tamanho={18} /></span>
+  </div>
+</article>

@@ -1,0 +1,23 @@
+{
+  "name": "portfolio-isabela",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "verificar": "node scripts/verificar-vazamento.mjs",
+    "test:verificador": "node --test tests/verificador.test.mjs",
+    "test:a11y": "node tests/a11y.mjs",
+    "test": "npm run test:verificador && npm run test:a11y"
+  },
+  "dependencies": {
+    "astro": "5.14.1"
+  },
+  "devDependencies": {
+    "axe-core": "4.10.2",
+    "playwright-core": "1.49.1"
+  }
+}

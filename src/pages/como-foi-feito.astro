@@ -1,0 +1,66 @@
+---
+import Base from "../layouts/Base.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+
+// Texto escrito a partir do que aconteceu neste projeto. Descreve o método, sem publicar prompts.
+const etapas = [
+  {
+    id: "briefing", titulo: "Briefing",
+    texto: "Comecei pelo pedido em linguagem solta: cinco projetos, um design system, hospedagem gratuita e nada sensível publicado. O agente coordenador transformou isso em uma entrevista, uma lista das lacunas de informação e uma especificação com fases. Respondi por escrito e o que eu não sabia ficou marcado como pendente, em vez de ser preenchido por suposição.",
+  },
+  {
+    id: "design-system", titulo: "Design system",
+    texto: "O design system foi gerado com o Claude como um artefato de design system, com tokens de cor nos temas claro e escuro, tipografia IBM Plex, escala de espaçamento e seis componentes. O site usa esses tokens como única fonte de estilo: não há cor ou espaçamento solto no código.",
+  },
+  {
+    id: "imagens", titulo: "Imagens",
+    texto: "As telas dos projetos são capturas reais dos aplicativos e sites, tiradas de forma automatizada com o Playwright. Evitei telas que exigem login com dados reais.",
+  },
+  {
+    id: "codigo", titulo: "Código",
+    texto: "O site é estático, em Astro, sem back-end. Os agentes trabalharam em paralelo no Maestri, cada um com uma pasta de responsabilidade: um agente de front-end fez menu, páginas e acabamento visual, e o coordenador cuidou de conteúdo, segurança e verificação. Cada entrega passou por checagem automática: um verificador que reprova o build se aparecer telefone, token, credencial ou caminho local, testes de acessibilidade em cinco larguras de tela nos dois temas e uma política de segurança de conteúdo.",
+  },
+  {
+    id: "deploy", titulo: "Deploy",
+    texto: "O site está publicado na Vercel, no plano gratuito, e cada envio ao GitHub gera um deploy novo. A política de segurança de conteúdo e os cabeçalhos de segurança são aplicados na publicação, e o build falha se o verificador achar dado sensível. O repositório segue privado até eu revisar o histórico com um scanner de segredos.",
+  },
+];
+
+const aprendizados = [
+  "Quem decide e valida sou eu. Os agentes executam partes do trabalho, e o conteúdo vem do meu currículo e dos meus relatos, nunca de suposição.",
+  "Dividir por escopo evita conflito: cada agente recebe pastas que pode alterar e pastas que não pode.",
+  "O teste automático achou o que a revisão visual não achou: um script embutido que a política de segurança bloquearia só em produção, e comentários de revisão que iam vazar para o HTML publicado.",
+  "Registrar o processo enquanto acontece, em vez de reconstruí-lo depois, é o que torna esta página possível.",
+];
+---
+<Base titulo="Como foi feito" descricao="Como este portfólio foi criado: orquestração de agentes de IA com Maestri e Claude Code, e validação humana em cada etapa.">
+  <section class="pf-section">
+    <div class="pf-container">
+      <SectionHeader nivel="h1" eyebrow="Como foi feito" titulo="O processo de criação deste portfólio">
+        <p class="lead">Construído por orquestração de agentes de IA, com validação humana em cada etapa. Aqui descrevo o método, não os prompts.</p>
+      </SectionHeader>
+
+      <h2>Visão geral do fluxo</h2>
+      <div class="pf-card" style="margin-top: var(--space-4)">
+        <p>Eu defino o objetivo, as regras e o que pode ou não ser publicado. No Maestri, um agente coordenador (Claude Code) divide o trabalho e outros agentes executam partes dele em paralelo: um de front-end, e um de back-end que neste projeto ficou sem tarefa, porque o site é estático.</p>
+        <p>Nada vai ao ar sem passar pelas verificações automáticas e pela minha revisão. Um agente pode escrever o código, mas não decide o que é verdade sobre os meus projetos.</p>
+      </div>
+
+      <h2 style="margin-top: var(--space-8)">Etapas</h2>
+      <ol class="pf-steps">
+        {etapas.map((e, i) => (
+          <li class="pf-card" id={e.id}>
+            <p class="eyebrow">Etapa {i + 1}</p>
+            <h3>{e.titulo}</h3>
+            <p>{e.texto}</p>
+          </li>
+        ))}
+      </ol>
+
+      <h2 style="margin-top: var(--space-8)">O que eu levo disso</h2>
+      <ul class="pf-prose" style="margin-top: var(--space-4)">
+        {aprendizados.map((a) => <li>{a}</li>)}
+      </ul>
+    </div>
+  </section>
+</Base>

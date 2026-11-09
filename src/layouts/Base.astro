@@ -1,0 +1,85 @@
+---
+import "../styles/global.css";
+import "../styles/v2.css";
+import Icon from "../components/Icon.astro";
+import { perfil } from "../data/site";
+
+interface Props { titulo?: string; descricao?: string }
+const { titulo, descricao = perfil.posicionamento || `${perfil.nome}, ${perfil.titulo}. Projetos, trajetória e processo.` } = Astro.props;
+const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Portfólio`;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={descricao} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:image" content={new URL("/og.png", Astro.site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Isabela Barcellos Freire, desenvolvedora e IA generativa" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline src="/theme.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+    <header class="pf-nav">
+      <div class="pf-container">
+        <a class="name" href="/">{perfil.nome}</a>
+        <div class="pf-nav__right">
+          <nav aria-label="Principal">
+            <details class="pf-menu">
+              <summary>Menu</summary>
+              <ul>
+                <li><a href="/#projetos">Projetos</a></li>
+                <li><a href="/#ia">IA generativa</a></li>
+                <li><a href="/#trajetoria">Trajetória</a></li>
+                <li><a href="/#contato">Contato</a></li>
+                <li><a href="/como-foi-feito/">Como foi feito</a></li>
+              </ul>
+            </details>
+          </nav>
+          <button type="button" class="pf-theme" data-theme-toggle aria-label="Alternar entre tema claro e escuro">
+            <span class="pf-theme__sun"><Icon nome="sun" /></span>
+            <span class="pf-theme__moon"><Icon nome="moon" /></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="conteudo"><slot /></main>
+    <footer>
+      <div class="pf-container">
+        <span>© {new Date().getFullYear()} {perfil.nome}</span>
+        <a class="pf-top" href="#">Voltar ao topo <Icon nome="arrow" tamanho={16} /></a>
+      </div>
+    </footer>
+    <script>
+      const menu = document.querySelector<HTMLDetailsElement>(".pf-menu");
+      const desktop = matchMedia("(min-width: 900px)");
+      const sincronizar = () => { if (!menu) return; if (desktop.matches) menu.setAttribute("open", ""); else menu.removeAttribute("open"); };
+      sincronizar();
+      desktop.addEventListener("change", sincronizar);
+
+      const raiz = document.documentElement;
+      const botao = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+      const escuroAgora = () => {
+        const t = raiz.getAttribute("data-theme");
+        return t ? t === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+      };
+      botao?.addEventListener("click", () => {
+        const novo = escuroAgora() ? "light" : "dark";
+        raiz.setAttribute("data-theme", novo);
+        try { localStorage.setItem("tema", novo); } catch { /* sem armazenamento */ }
+      });
+    </script>
+  </body>
+</html>

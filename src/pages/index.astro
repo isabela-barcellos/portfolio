@@ -1,0 +1,155 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { perfil, faixaTech, numeros, foco, trajetoria, competencias, cv, mensagemContato } from "../data/site";
+import foto from "../assets/perfil.jpg";
+
+const cases = (await getCollection("cases", (c) => !c.data.rascunho)).sort((a, b) => a.data.ordem - b.data.ordem);
+const nomeCurto = (t: string) => t.split(" — ")[0];
+
+// Projetos separados por origem: Empresas primeiro (o agente do Safra, em produção, é a prova mais forte).
+// Dentro de cada grupo vale a ordem do frontmatter (`ordem`): na faculdade, o ECOA (1º lugar no NEXT) vem primeiro.
+const grupos = [
+  { titulo: "Empresas", sub: "Hackathons", itens: cases.filter((c) => c.data.categoria === "empresa") },
+  { titulo: "Faculdade", sub: "Challenges da FIAP", itens: cases.filter((c) => c.data.categoria === "faculdade") },
+];
+
+const mailto = `mailto:${perfil.email}?subject=${encodeURIComponent(mensagemContato.assunto)}&body=${encodeURIComponent(mensagemContato.corpo)}`;
+---
+<Base>
+  <section class="pf-hero">
+    <div class="pf-container pf-hero__grid">
+      <div>
+        <p class="eyebrow">{perfil.titulo}</p>
+        <h1 style="margin-top: var(--space-3)">{perfil.nome}</h1>
+        {perfil.posicionamento && <p class="lead" style="margin-top: var(--space-5)">{perfil.posicionamento}</p>}
+        <ul class="pf-lines" aria-label="Áreas">
+          {perfil.linhas.map((l) => <li>{l}</li>)}
+        </ul>
+        <div class="pf-actions">
+          <a class="pf-btn pf-btn--primary" href="#projetos">Ver projetos <Icon nome="arrow" tamanho={18} /></a>
+          <a class="pf-btn pf-btn--secondary" href={cv.arquivo} download={cv.nome}><Icon nome="download" tamanho={18} /> Baixar CV</a>
+          <a class="pf-btn pf-btn--ghost" href={mailto}><Icon nome="mail" tamanho={18} /> Falar comigo</a>
+        </div>
+        <div class="pf-actions pf-actions--social">
+          <a class="pf-iconbtn" href={perfil.linkedin} rel="noopener" aria-label="LinkedIn de Isabela"><Icon nome="linkedin" /></a>
+          <a class="pf-iconbtn" href={perfil.github} rel="noopener" aria-label="GitHub de Isabela"><Icon nome="github" /></a>
+        </div>
+      </div>
+      <div class="pf-hero__photo">
+        <div class="pf-photo">
+          <Image src={foto} alt={perfil.foto.alt} widths={[340, 680]} sizes="(min-width: 860px) 340px, 68vw" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pf-strip" data-strip role="region" aria-label="Tecnologias e ferramentas">
+    <div class="pf-strip__track">
+      {faixaTech.map((t) => <span>{t}</span>)}
+      {faixaTech.map((t) => <span class="pf-strip__dup" aria-hidden="true">{t}</span>)}
+    </div>
+    <button type="button" class="pf-strip__pause" data-pause aria-pressed="false" aria-label="Pausar a rolagem das tecnologias">
+      <span class="pf-strip__ico-pause"><Icon nome="pause" tamanho={18} /></span>
+      <span class="pf-strip__ico-play"><Icon nome="play" tamanho={18} /></span>
+    </button>
+  </div>
+
+  <section class="pf-section" style="padding-bottom: 0">
+    <div class="pf-container">
+      <ul class="pf-stats" aria-label="Números">
+        {numeros.map((n) => <li><span class="v">{n.valor}</span><span class="l">{n.rotulo}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="pf-section" id="ia">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">Foco</p><h2>IA generativa na prática</h2></div>
+      <ul class="pf-tiles">
+        {foco.map((f) => (
+          <li class="pf-tile">
+            <span class="pf-tile__ico"><Icon nome={f.icone} tamanho={24} /></span>
+            <h3><a href={f.href}>{f.titulo}</a></h3>
+            <p>{f.linha}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="pf-section" id="projetos" style="padding-top: 0">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">O que construí</p><h2>Projetos</h2></div>
+      {grupos.map((gr) => gr.itens.length > 0 && (
+        <div class="pf-group">
+          <h3 class="pf-group__title">{gr.titulo} <span class="pf-group__sub">{gr.sub}</span></h3>
+          <div class="pf-grid">
+            {gr.itens.map((c) => {
+              const g = c.data.galeria.find((x) => x.arquivo === c.data.capa);
+              return <ProjectCard id={c.id} titulo={nomeCurto(c.data.titulo)} linha={c.data.resumo_curto ?? c.data.resumo} selo={c.data.selo} capa={c.data.capa} capaAlt={g?.alt} capaTexto={c.data.capa_texto} icone={c.data.icone} />;
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="pf-section" id="trajetoria" style="padding-top: 0">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">Experiência</p><h2>Onde trabalhei</h2></div>
+      <div class="pf-acc">
+        {trajetoria.map((t) => (
+          <details class="pf-job">
+            <summary>
+              <span class="pf-job__main"><span class="co">{t.empresa}</span><span class="rl">{t.funcao}</span></span>
+              <span class="pf-job__per">{t.periodo}</span>
+            </summary>
+            <div class="pf-acc__body"><ul>{t.marcadores.map((m) => <li>{m}</li>)}</ul></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pf-section" id="competencias" style="padding-top: 0">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">Ferramentas e base</p><h2>Competências</h2></div>
+      <div class="pf-skills">
+        {competencias.map((g) => (
+          <div>
+            <h3>{g.area}</h3>
+            <ul class="pf-tags">{g.itens.map((i) => <li class="pf-tag">{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pf-section" id="contato" style="padding-top: 0">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">Contato</p><h2>Vamos conversar</h2></div>
+      <div class="pf-actions" style="margin-top: 0">
+        <a class="pf-btn pf-btn--primary" href={mailto}><Icon nome="mail" tamanho={18} /> Falar comigo</a>
+        <a class="pf-btn pf-btn--secondary" href={cv.arquivo} download={cv.nome}><Icon nome="download" tamanho={18} /> Baixar CV</a>
+        <a class="pf-btn pf-btn--ghost" href={perfil.linkedin} rel="noopener"><Icon nome="linkedin" tamanho={18} /> LinkedIn</a>
+        <a class="pf-btn pf-btn--ghost" href={perfil.github} rel="noopener"><Icon nome="github" tamanho={18} /> GitHub</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Pausa/retoma a faixa de tecnologias. O CSS já a deixa parada para quem prefere menos movimento.
+  const faixa = document.querySelector<HTMLElement>("[data-strip]");
+  const botao = document.querySelector<HTMLButtonElement>("[data-pause]");
+  botao?.addEventListener("click", () => {
+    const pausado = faixa?.getAttribute("data-paused") === "true";
+    faixa?.setAttribute("data-paused", pausado ? "false" : "true");
+    botao.setAttribute("aria-pressed", pausado ? "false" : "true");
+    botao.setAttribute("aria-label", pausado ? "Pausar a rolagem das tecnologias" : "Retomar a rolagem das tecnologias");
+  });
+</script>

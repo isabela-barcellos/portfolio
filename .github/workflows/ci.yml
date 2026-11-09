@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  qualidade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Bloqueio de dados sensíveis
+        run: npm run verificar
+
+      - name: Testes do verificador
+        run: npm run test:verificador
+
+      - name: Instalar Chromium
+        run: npx playwright-core install --with-deps chromium
+
+      - name: Acessibilidade e CSP
+        run: npm run test:a11y

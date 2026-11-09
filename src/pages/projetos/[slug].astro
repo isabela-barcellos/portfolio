@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import Carousel from "../../components/Carousel.astro";
+import { imagemDoCase } from "../../data/imagens";
+
+export async function getStaticPaths() {
+  const cases = await getCollection("cases", (c) => !c.data.rascunho);
+  return cases.map((c) => ({ params: { slug: c.id }, props: { c } }));
+}
+const { c } = Astro.props;
+const { Content } = await render(c);
+const d = c.data;
+const linha = d.resumo_curto ?? d.resumo;
+
+const slides = d.galeria.map((g) => ({ src: imagemDoCase(c.id, g.arquivo), alt: g.alt, legenda: g.legenda }));
+
+// O corpo do case vira acordeões fechados: cada "## Título" do markdown é um bloco que só abre no clique.
+const html: string = (c as any).rendered?.html ?? "";
+const secoes = html
+  .split(/(?=<h2[\s>])/)
+  .map((p) => {
+    const m = p.match(/^<h2[^>]*>([\s\S]*?)<\/h2>/);
+    return m ? { titulo: m[1].replace(/<[^>]+>/g, ""), corpo: p.slice(m[0].length) } : null;
+  })
+  .filter((s): s is { titulo: string; corpo: string } => !!s);
+---
+<Base titulo={d.titulo} descricao={linha}>
+  <article class="pf-section">
+    <div class="pf-container">
+      <p><a href="/#projetos">← Projetos</a></p>
+
+      <header class="pf-casehead" style="margin-top: var(--space-5)">
+        <div class="pf-casehead__top">
+          {d.selo && <span class="pf-pill">{d.selo}</span>}
+          <span class="eyebrow">{d.contexto}</span>
+        </div>
+        <h1 style="font-size: clamp(30px, 6vw, 44px)">{d.titulo}</h1>
+        <p class="lead">{linha}</p>
+        {d.resultado_destaque && <p class="pf-result"><Icon nome="sparkles" tamanho={18} /> {d.resultado_destaque}</p>}
+        {d.stack.length > 0 && <ul class="pf-tags">{d.stack.map((s) => <li class="pf-tag pf-tag--accent">{s}</li>)}</ul>}
+        {(d.producao || d.repositorio) && (
+          <div class="pf-actions" style="margin-top: var(--space-2)">
+            {d.producao && <a class="pf-btn pf-btn--primary" href={d.producao} rel="noopener">{d.rotulo_producao} <Icon nome="external" tamanho={18} /></a>}
+            {d.repositorio && <a class="pf-btn pf-btn--secondary" href={d.repositorio} rel="noopener"><Icon nome="github" tamanho={18} /> Ver o código</a>}
+          </div>
+        )}
+      </header>
+
+      <div style="margin-top: var(--space-7)">
+        {slides.length > 0
+          ? <Carousel slides={slides} rotulo={`Telas de ${d.titulo.split(" — ")[0]}`} />
+          : (
+            <div class="pf-banner">
+              <strong>{d.capa_texto ?? d.titulo}</strong>
+              <Icon nome={d.icone} tamanho={120} />
+            </div>
+          )}
+      </div>
+
+      <div class="pf-acc" style="margin-top: var(--space-7); max-width: 780px">
+        {d.papel && (
+          <details>
+            <summary>Meu papel</summary>
+            <div class="pf-acc__body"><p>{d.papel}</p></div>
+          </details>
+        )}
+        {secoes.length > 0
+          ? secoes.map((s) => (
+              <details>
+                <summary>{s.titulo}</summary>
+                <div class="pf-acc__body" set:html={s.corpo} />
+              </details>
+            ))
+          : <div class="pf-prose"><Content /></div>}
+      </div>
+    </div>
+  </article>
+</Base>

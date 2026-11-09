@@ -1,0 +1,6 @@
+---
+interface Props { eyebrow: string; titulo: string; nivel?: "h1" | "h2" }
+const { eyebrow, titulo, nivel = "h2" } = Astro.props;
+const Tag = nivel;
+---
+<div class="pf-sh"><p class="eyebrow">{eyebrow}</p><Tag>{titulo}</Tag><slot /></div>
