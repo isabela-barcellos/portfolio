@@ -26,13 +26,9 @@
 .pf-tag, .pf-lines li, .pf-pill { border-radius: 999px; }
 .pf-iconbtn, .pf-theme, .pf-car__btn { border-color: var(--border-strong); }
 
-/* ---------- Faixa de tecnologias: degradê ameixa -> magenta (valores da referência) ---------- */
-.pf-strip { background: linear-gradient(90deg, var(--strip-a), var(--strip-b)); color: var(--strip-ink); }
-.pf-strip__pause { background: var(--strip-b); border-color: var(--strip-ink); color: var(--strip-ink); }
-
 /* ---------- Números em cartões com destaque rosa ---------- */
 .pf-stats li { background: var(--surface-200); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-5); box-shadow: var(--shadow-card); }
-.pf-stats .v { color: var(--brand-ink); text-shadow: 0 0 28px var(--glow); }
+.pf-stats .v { color: var(--pink-soft); text-shadow: 0 0 28px var(--glow); }
 
 /* ---------- Cartões: borda sutil e brilho rosa no hover ---------- */
 .pf-pcard, .pf-tile, .pf-acc details { border-color: var(--border); border-radius: var(--radius-lg); }
@@ -40,12 +36,12 @@
   .pf-pcard, .pf-tile, .pf-btn--primary, .pf-stats li { transition: box-shadow .2s ease, border-color .2s ease; }
 }
 .pf-pcard:hover, .pf-tile:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 10px 30px var(--glow); }
-.pf-tile__ico { background: var(--brand-tint); }
+.pf-tile__ico { background: var(--surface-300); color: var(--link); }
 .pf-pcard__cover.pf-pcard__cover--text strong, .pf-banner strong { font-family: var(--mono); letter-spacing: -.03em; }
 /* Capas de texto: fundo ameixa escuro com título claro e ícone rosa (o rosa vivo fica só em botões e acentos) */
 .pf-pcard__cover.pf-pcard__cover--text, .pf-banner { background: var(--brand-tint); color: var(--ink); border-bottom: 3px solid var(--brand); }
 .pf-banner { border: 1px solid var(--border); border-bottom: 3px solid var(--brand); }
-.pf-pcard__cover--text .pf-icon, .pf-banner .pf-icon { color: var(--brand-ink); opacity: .55; }
+.pf-pcard__cover--text .pf-icon, .pf-banner .pf-icon { color: var(--pink-soft); opacity: .55; }
 
 /* ---------- Rodapé ---------- */
 .pf-foot-links { display: inline-flex; flex-wrap: wrap; gap: var(--space-4) var(--space-5); }

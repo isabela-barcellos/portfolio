@@ -1,4 +1,4 @@
-Sistema visual do portfólio: azul-noite como base, rosa como cor de marca e acento. Tema **escuro por padrão**; o claro (rosa-névoa com rosa-escuro) entra pelo botão do topo. A paleta escura vem de uma referência visual de portfólio, com os valores medidos na imagem e os contrastes conferidos por cálculo (WCAG).
+Sistema visual do portfólio: azul-noite como base, rosa como cor de marca e ciano como segundo acento. Tema **escuro por padrão**; o claro (rosa-névoa com rosa-escuro) entra pelo botão do topo. A paleta escura vem de uma referência visual de portfólio, com os valores medidos na imagem e os contrastes conferidos por cálculo (WCAG).
 
 ## Fundamentos de conteúdo
 
@@ -12,13 +12,16 @@ Sistema visual do portfólio: azul-noite como base, rosa como cor de marca e ace
 
 ## Cor
 
-- Página em `surface-100`; cartões, navegação e painéis em `surface-200`; tags e regiões rebaixadas em `surface-300`.
+- **Proporção 60/30/10.** ~60% fundo (`surface-100`), ~30% superfícies e texto (`surface-200`, `surface-300`, `ink`, `ink-muted`), ~10% acentos (rosa e ciano).
+- Página em `surface-100`; cartões, navegação, painéis e faixa de tecnologias em `surface-200`; tags e regiões rebaixadas em `surface-300`.
 - Texto principal em `ink`, secundário em `ink-muted`. Nenhum outro cinza para texto.
-- **Dois rosas, dois papéis.** `brand` (#f14b9c) é **preenchimento**: botão primário e barras de destaque. `brand-ink` (#fb64ab) é **texto**: links, números e rótulos. Rosa como texto pequeno só com `brand-ink` ou `accent`, que passam de 4,5:1.
-- Texto sobre `brand` é sempre `on-brand`, que no escuro é a cor da página (5,3:1). Branco sobre `#f14b9c` dá cerca de 3,5:1 e reprova.
-- `accent` (rosa suave) vale para eyebrows, tags e o anel de foco.
-- **O rosa é acento, não fundo.** Capas de texto usam `brand-tint` (ameixa) com título claro. O rosa vivo fica em botão, barras de destaque, números e anel da foto.
-- O degradê é permitido só na faixa de tecnologias (`strip-a` → `strip-b`, ameixa para magenta), com `strip-ink` por cima (7,7:1 ou mais nas duas pontas).
+- **Dois acentos, papéis separados.**
+  - **Rosa** (`brand` #ff4d94) só em **CTAs principais e detalhes de marca**: botão primário (hero, contato, "Falar comigo" do topo), anel da foto, barrinha sob os títulos h2, borda inferior das capas de texto e separadores "·" da faixa. Nada mais.
+  - **Rosa suave** (`pink-soft` #ffb3d1; `accent` e `brand-ink` são aliases) para **texto rosa pequeno**: eyebrows (13px, caixa alta, mono), chips do hero, pílulas, números das estatísticas e ícone das capas de texto. Chips e capas usam `brand-tint` (ameixa #3a1830) de fundo.
+  - **Ciano** (`link` #22d3ee no escuro, #0b6a80 no claro) para **links, botão ghost, "Ver detalhes", "Voltar ao topo", tags de tecnologia, ícones dos blocos de IA generativa, "+/–" dos acordeões, hover dos botões de ícone e anel de foco**.
+- Texto sobre `brand` é sempre `on-brand`, que no escuro é a cor da página (#0f172a). Branco sobre #ff4d94 dá cerca de 3,2:1 e reprova; o `test:a11y` pega essa regressão.
+- **O rosa é acento, não fundo.** Capas de texto usam `brand-tint` com título claro e borda inferior rosa.
+- **Sem degradê.** A faixa de tecnologias é `surface-200` com 1px de `border` em cima e embaixo, texto em `ink` e separadores em `brand`; o botão de pausa usa `surface-300`, `border-strong` e ícone `ink`.
 - `success`, `warning` e `danger` aparecem só em formulários e sempre com palavra ou ícone.
 
 ## Tipografia
@@ -36,7 +39,7 @@ Sistema visual do portfólio: azul-noite como base, rosa como cor de marca e ace
 
 ## Estados e acessibilidade
 
-- Foco: contorno sólido de 3px em `focus-ring` (`accent`), com 2px de afastamento, em todo elemento interativo. Nunca remova.
+- Foco: contorno sólido de 3px em `focus-ring` (`link`, ciano), com 2px de afastamento, em todo elemento interativo. Nunca remova.
 - Texto passa 4,5:1 e bordas de controle e foco passam 3:1 nos dois temas. O teste `npm run test:a11y` verifica isso com o axe-core.
 - Informação nunca é transmitida só pela cor: status leva palavra ou ícone.
 

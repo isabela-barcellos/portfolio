@@ -1,19 +1,22 @@
-/* Tokens do DS "Portfólio IA" v2 (design-system/tokens.json).
-   Tema ESCURO é o padrão (azul-noite + rosa). O claro entra com data-theme="light" (botão do topo).
-   Valores do escuro amostrados da referência visual da Isabela; contrastes conferidos por cálculo (WCAG). */
+/* Tokens do DS "Portfólio IA" v3 (design-system/tokens.json).
+   Tema ESCURO é o padrão (azul-noite). O claro entra com data-theme="light" (botão do topo).
+   Proporção de cor: ~60% fundo, ~30% superfícies e texto, ~10% acentos.
+   ROSA (brand) só em CTAs principais e detalhes de marca; ROSA SUAVE (pink-soft) em texto rosa pequeno;
+   CIANO (link) em links, tags de tecnologia, ícones de IA e foco. Contrastes conferidos por cálculo (WCAG). */
 :root {
-  --surface-100: #101729; --surface-200: #1a2135; --surface-300: #242d45;
-  --ink: #f2f4fb; --ink-muted: #aab3cc;
-  --border: #2a3350; --border-strong: #6b7596;
-  --brand: #f14b9c;        /* preenchimento: botão primário, capas de texto */
-  --brand-strong: #ff6db0; /* hover do primário */
-  --brand-ink: #fb64ab;    /* TEXTO rosa pequeno (links, números): >= 4,5:1 nas superfícies */
-  --on-brand: #101729;     /* texto sobre brand: escuro (branco daria ~3,5:1) */
-  --brand-tint: #3a1830;
-  --accent: #f06fa8; --accent-tint: #33182c;
-  --focus-ring: var(--accent);
-  --strip-a: #3f1f36; --strip-b: #93174e; --strip-ink: #f2f4fb;
-  --glow: rgba(241, 75, 156, .35);
+  --surface-100: #0f172a; --surface-200: #1a2238; --surface-300: #252e48;
+  --ink: #f1f5f9; --ink-muted: #a8b3c7;
+  --border: #28324d; --border-strong: #6b7596;
+  --brand: #ff4d94;        /* preenchimento: botão primário, barrinha dos títulos, anel da foto */
+  --brand-strong: #ff7aae; /* hover do primário */
+  --on-brand: #0f172a;     /* texto sobre brand: SEMPRE escuro (branco daria ~3,2:1) */
+  --pink-soft: #ffb3d1;    /* TEXTO rosa pequeno: eyebrows, chips, pílulas, números */
+  --brand-ink: #ffb3d1;
+  --accent: #ffb3d1;
+  --brand-tint: #3a1830; --accent-tint: #3a1830;
+  --link: #22d3ee;         /* segundo acento (ciano): links, tags de tecnologia, ícones de IA, foco */
+  --focus-ring: var(--link);
+  --glow: rgba(255, 77, 148, .35);
   --shadow-card: 0 1px 2px rgba(0,0,0,.5);
   --shadow-pop: 0 8px 24px rgba(0,0,0,.55);
   --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 24px;
@@ -28,10 +31,10 @@
   --surface-100: #fbf4f8; --surface-200: #ffffff; --surface-300: #f4e6ee;
   --ink: #1a1226; --ink-muted: #5d4b68;
   --border: #e6d3de; --border-strong: #8a6f80;
-  --brand: #c2185b; --brand-strong: #a3124c; --brand-ink: #b0124f; --on-brand: #ffffff;
-  --brand-tint: #fde7f1;
-  --accent: #ad1457; --accent-tint: #fbe0ec;
-  --strip-a: #c2185b; --strip-b: #7d0a3a; --strip-ink: #ffffff;
+  --brand: #c2185b; --brand-strong: #a3124c; --on-brand: #ffffff;
+  --pink-soft: #ad1457; --brand-ink: #ad1457; --accent: #ad1457;
+  --brand-tint: #fde7f1; --accent-tint: #fde7f1;
+  --link: #0b6a80;
   --glow: rgba(194, 24, 91, .22);
   --shadow-card: 0 1px 2px rgba(26,18,38,.08), 0 1px 1px rgba(26,18,38,.04);
   --shadow-pop: 0 8px 24px rgba(26,18,38,.14);
@@ -45,8 +48,8 @@ body {
   font: 400 16px/26px var(--sans);
 }
 img, video { max-width: 100%; height: auto; display: block; }
-a { color: var(--brand-ink); text-underline-offset: 3px; }
-a:hover { color: var(--brand-strong); }
+a { color: var(--link); text-underline-offset: 3px; }
+a:hover { color: var(--ink); }
 :focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
 .skip { position: absolute; left: -999px; }
 .skip:focus { left: var(--space-4); top: var(--space-4); background: var(--surface-200); padding: var(--space-2) var(--space-4); z-index: 10; }
@@ -62,7 +65,7 @@ h3 { font-size: 18px; line-height: 26px; letter-spacing: -.01em; }
 p { margin: 0; max-width: var(--measure-max); }
 .lead { font-size: 18px; line-height: 28px; color: var(--ink-muted); }
 .muted { color: var(--ink-muted); }
-.eyebrow { font: 500 12px/16px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.eyebrow { font: 500 13px/18px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--pink-soft); }
 .mono { font-family: var(--mono); }
 
 /* Nav */
@@ -71,7 +74,7 @@ p { margin: 0; max-width: var(--measure-max); }
 .pf-nav .name { font-weight: 600; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; }
 .pf-nav ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); list-style: none; margin: 0; padding: 0; }
 .pf-nav ul a { color: var(--ink-muted); text-decoration: none; display: inline-block; padding: var(--space-2) 0; min-height: 44px; line-height: 28px; }
-.pf-nav ul a:hover { color: var(--brand-ink); }
+.pf-nav ul a:hover { color: var(--link); }
 
 .pf-nav nav { position: relative; }
 .pf-menu summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--space-4); border: 1px solid var(--border-strong); border-radius: var(--radius-md); font-weight: 500; }
@@ -91,7 +94,7 @@ p { margin: 0; max-width: var(--measure-max); }
 .pf-prompt { border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-300); min-width: 0; }
 .pf-prompt__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-1) var(--space-3); border-bottom: 1px solid var(--border); }
 .pf-prompt__label { font: 500 12px/16px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
-.pf-prompt__copy { min-height: 44px; min-width: 44px; padding: 0 var(--space-3); background: transparent; color: var(--brand-ink); border: 0; font: 500 14px var(--sans); cursor: pointer; }
+.pf-prompt__copy { min-height: 44px; min-width: 44px; padding: 0 var(--space-3); background: transparent; color: var(--link); border: 0; font: 500 14px var(--sans); cursor: pointer; }
 .pf-prompt pre { margin: 0; padding: var(--space-3); overflow-x: auto; font: 400 14px/22px var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
 .pf-prompt code { font: inherit; }
 
@@ -108,9 +111,8 @@ p { margin: 0; max-width: var(--measure-max); }
 
 /* Tag */
 .pf-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
-.pf-tag { font: 500 12px/16px var(--mono); letter-spacing: .06em; padding: 6px 10px; border-radius: var(--radius-sm); background: var(--surface-300); color: var(--ink); }
-.pf-tag--brand { background: var(--brand-tint); color: var(--brand-ink); }
-.pf-tag--accent { background: var(--accent-tint); color: var(--accent); }
+.pf-tag { font: 500 12px/16px var(--mono); letter-spacing: .06em; padding: 6px 10px; border-radius: var(--radius-sm); background: var(--surface-300); color: var(--link); }
+.pf-tag--brand, .pf-tag--accent { background: var(--surface-300); color: var(--link); }
 
 /* ProjectCard */
 .pf-grid { display: grid; gap: var(--space-6); grid-template-columns: 1fr; }
@@ -126,7 +128,7 @@ p { margin: 0; max-width: var(--measure-max); }
 
 /* MetricStat */
 .pf-metrics { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); margin: var(--space-6) 0; }
-.pf-metric .v { font: 500 28px/32px var(--mono); color: var(--brand-ink); display: block; }
+.pf-metric .v { font: 500 28px/32px var(--mono); color: var(--pink-soft); display: block; }
 .pf-metric .l { font-size: 12px; line-height: 18px; color: var(--ink-muted); }
 
 /* TimelineItem */
