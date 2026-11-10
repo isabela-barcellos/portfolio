@@ -76,6 +76,11 @@ for (const tema of ["light", "dark"]) {
     }
     if (externos.size) falhas.push(`${tema}, ${largura}px: requisições a terceiros: ${[...externos].join(", ")}`);
     if (violacoes.length) falhas.push(`${tema}, ${largura}px: violações de CSP: ${[...new Set(violacoes)].join(" ; ")}`);
+    // Promessa do rodapé ("sem cookies nem análise; só a escolha de tema"): o teste a sustenta.
+    const cookies = await ctxA.cookies();
+    if (cookies.length) falhas.push(`${tema}, ${largura}px: cookies encontrados: ${cookies.map((c) => c.name).join(", ")}`);
+    const chaves = await a.evaluate(() => Object.keys(localStorage));
+    if (chaves.some((k) => k !== "tema")) falhas.push(`${tema}, ${largura}px: localStorage com chaves além de "tema": ${chaves.join(", ")}`);
     await ctxA.close();
     await ctxB.close();
   }

@@ -25,6 +25,7 @@ const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Po
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={descricao} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={descricao} />
     <meta property="og:type" content="website" />
@@ -74,6 +75,7 @@ const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Po
           <a class="pf-top" href={perfil.repositorio} rel="noopener"><Icon nome="github" tamanho={16} /> Código-fonte</a>
           <a class="pf-top" href="#">Voltar ao topo <Icon nome="arrow" tamanho={16} /></a>
         </span>
+        <p class="pf-privacy">Este site não usa cookies nem ferramentas de análise. Só guarda no seu navegador a sua escolha de tema.</p>
       </div>
     </footer>
     <script>

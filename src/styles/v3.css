@@ -44,6 +44,7 @@
 .pf-pcard__cover--text .pf-icon, .pf-banner .pf-icon { color: var(--pink-soft); opacity: .55; }
 
 /* ---------- Rodapé ---------- */
+.pf-privacy { flex-basis: 100%; max-width: none; font-size: 13px; line-height: 20px; color: var(--ink-muted); }
 .pf-foot-links { display: inline-flex; flex-wrap: wrap; gap: var(--space-4) var(--space-5); }
 
 /* ---------- Títulos de seção ---------- */
