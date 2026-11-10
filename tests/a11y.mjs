@@ -38,7 +38,7 @@ const base = `http://127.0.0.1:${servidor.address().port}`;
 // Páginas: tudo que o build gerou (menos 404, testado à parte).
 const paginas = ["/"];
 for (const d of fs.readdirSync(path.join(dist, "projetos"))) paginas.push(`/projetos/${d}/`);
-paginas.push("/como-foi-feito/", "/pagina-que-nao-existe/");
+paginas.push("/como-foi-feito/", "/en/", "/pagina-que-nao-existe/");
 
 const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || undefined });
 const falhas = [];

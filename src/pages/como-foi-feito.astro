@@ -3,6 +3,20 @@ import Base from "../layouts/Base.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import Icon from "../components/Icon.astro";
 import { perfil } from "../data/site";
+import fs from "node:fs";
+import path from "node:path";
+
+// O placar vem dos arquivos gerados pelo corretor (evals/resultado-*.md): uma única fonte da verdade.
+const placar = (v: string) => {
+  const m = fs.readFileSync(path.resolve("evals", `resultado-${v}.md`), "utf8").match(/(\d+)\/(\d+) casos/);
+  if (!m) throw new Error(`placar não encontrado em evals/resultado-${v}.md`);
+  return `${m[1]}/${m[2]}`;
+};
+const evalLinhas = [
+  { v: "v0", mudou: "Prompt curto, sem regras.", falhas: "Publicou telefone e endereço e não seguiu a ordem das seções." },
+  { v: "v1", mudou: "Sete regras explícitas.", falhas: "Corrigiu os dois erros, mas criou uma seção de papel mesmo com o pedido de omissão e repetiu termos proibidos ao explicar uma recusa." },
+  { v: "v2", mudou: "Omissão passa a ter prioridade sobre a estrutura; a explicação não repete o que foi recusado.", falhas: "Nenhuma nos 8 casos." },
+].map((l) => ({ ...l, placar: placar(l.v) }));
 
 // Texto escrito a partir do que aconteceu neste projeto. Descreve o método, sem publicar prompts.
 const etapas = [
@@ -65,6 +79,26 @@ const aprendizados = [
         <p class="muted">O workflow de integração contínua existe, mas ainda não foi validado em execução no GitHub. Enquanto isso, os testes rodam na minha máquina e o verificador roda em cada build.</p>
         <div class="pf-actions" style="margin-top: 0">
           <a class="pf-btn pf-btn--primary" href={perfil.repositorio} rel="noopener"><Icon nome="github" tamanho={18} /> Ver o repositório</a>
+        </div>
+      </div>
+
+      <h2 style="margin-top: var(--space-8)">Avaliação de agente</h2>
+      <div class="pf-card" style="margin-top: var(--space-4)">
+        <p>Avaliei um agente de conteúdo: o que escreve textos de portfólio a partir de fatos que eu autorizo. São 8 casos adversariais com dados fictícios (inventar métrica, publicar telefone, vazar nome confidencial, obedecer instrução escondida num documento, ignorar pedido de omissão, tom e ordem das seções, link inexistente). A correção é por regras, sem outro modelo como juiz.</p>
+        <div class="pf-tablewrap" role="region" aria-label="Resultado da avaliação por versão do prompt" tabindex="0">
+          <table class="pf-evaltable">
+            <caption class="sr-only">Resultado por versão do prompt do agente</caption>
+            <thead><tr><th scope="col">Versão</th><th scope="col">O que mudou</th><th scope="col">Passou</th><th scope="col">O que falhou</th></tr></thead>
+            <tbody>
+              {evalLinhas.map((l) => (
+                <tr><th scope="row" class="mono">{l.v}</th><td>{l.mudou}</td><td class="mono">{l.placar}</td><td>{l.falhas}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="muted"><strong>Limites:</strong> uma execução por versão e só 8 casos: é um sinal, não uma estatística. O v2 foi escrito depois de eu ver as falhas do v1, então 8/8 mostra que corrigi aquelas falhas, não que o agente generaliza. O corretor tem testes próprios. O agente avaliado é um modelo Claude. Isto avalia um agente de redação com regras; os testes do verificador de vazamento, descritos acima, são outra coisa: testam uma barreira de segurança.</p>
+        <div class="pf-actions" style="margin-top: 0">
+          <a class="pf-btn pf-btn--secondary" href={`${perfil.repositorio}/tree/main/evals`} rel="noopener"><Icon nome="github" tamanho={18} /> Ver casos e respostas</a>
         </div>
       </div>
 

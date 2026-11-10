@@ -39,6 +39,18 @@ O teste de acessibilidade usa `playwright-core` e precisa de um Chrome/Chromium.
 - **CSP restritiva e cabeçalhos de segurança** em `vercel.json` (`script-src 'self'`, `font-src 'self'`, sem iframes, sem câmera/microfone). **As fontes (IBM Plex, licença OFL) são hospedadas no próprio site**: a página não chama o Google nem outro terceiro em tempo de execução, o que também evita enviar o IP do visitante a terceiros.
 - A decisão está registrada em [`docs/adr/0001-site-estatico-csp-e-verificacao.md`](docs/adr/0001-site-estatico-csp-e-verificacao.md).
 
+## Avaliação de agente
+
+Em `evals/` há uma avaliação pequena de um agente de redação (8 casos adversariais com dados fictícios, correção por regras e testes do próprio corretor). O resultado, com as falhas reais de cada versão do prompt e os limites do método, está em [`evals/README.md`](evals/README.md) e na página "Como foi feito".
+
+## Versão em inglês
+
+`/en/` traz o topo do portfólio em inglês (hero, números, experiência, competências e contato). Os cases continuam em português, e a página avisa isso. Há um botão de idioma na barra do topo e `hreflang` entre a Home e `/en/`.
+
+## Licença
+
+Todos os direitos reservados (ver [`LICENSE`](LICENSE)): o repositório é público para leitura e avaliação, sem licença de reutilização. É uma decisão deliberada e reversível: abrir para uma licença livre depois é trocar o arquivo; uma licença livre já concedida não se desfaz.
+
 ## Estrutura
 
 ```
@@ -47,7 +59,8 @@ src/pages/         Home, case, "Como foi feito", 404
 src/components/    Carousel, ProjectCard, Icon, SectionHeader
 src/data/          perfil, trajetória, competências
 scripts/           verificador de vazamento
-tests/             testes do verificador e de acessibilidade/CSP
+tests/             testes do verificador, do corretor e de acessibilidade/CSP
+evals/             avaliação de agente (casos, corretor, respostas)
 ```
 
 ## Deploy

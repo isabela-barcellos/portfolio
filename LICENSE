@@ -1,0 +1,20 @@
+Copyright (c) 2026 Isabela Barcellos Freire. Todos os direitos reservados.
+Copyright (c) 2026 Isabela Barcellos Freire. All rights reserved.
+
+PT-BR
+Este repositório é público para leitura e avaliação do trabalho (código, testes, decisões de arquitetura e método).
+Não é concedida licença para copiar, modificar, redistribuir nem reutilizar o código, os textos, as imagens, a foto, o
+currículo ou o design deste portfólio sem autorização prévia e por escrito da autora. Citar trechos curtos, com
+atribuição e link para este repositório, é permitido.
+
+Componentes de terceiros mantêm as suas próprias licenças: Astro (MIT), IBM Plex via Fontsource (SIL Open Font License
+1.1) e as demais dependências listadas em package.json e package-lock.json.
+
+EN
+This repository is public so that the work (code, tests, architecture decisions and method) can be read and evaluated.
+No license is granted to copy, modify, redistribute or reuse the code, texts, images, photo, résumé or design of this
+portfolio without the author's prior written permission. Quoting short excerpts with attribution and a link to this
+repository is allowed.
+
+Third-party components keep their own licenses: Astro (MIT), IBM Plex via Fontsource (SIL Open Font License 1.1) and the
+other dependencies listed in package.json and package-lock.json.

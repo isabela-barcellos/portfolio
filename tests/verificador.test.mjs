@@ -31,8 +31,9 @@ const casos = [
   ["celular brasileiro é barrado", { "public/a.txt": "ligue (11) 9 1234-5678" }, true, "celular"],
   ["e-mail não autorizado é barrado", { "public/a.txt": "contato: fulano@empresa.com" }, true, "e-mail não autorizado"],
   ["token do GitHub é barrado", { "src/a.ts": "const t = 'ghp_" + "a".repeat(36) + "';" }, true, "token GitHub"],
-  ["JWT é barrado", { "src/a.ts": "const j = 'eyJhbGciOiJIUzI1NiJ9aaaaaaaa.eyJzdWIiOiIxMjM0NTY3ODkwIn0aaaa.SflKxwRJSMeKKF2QT4fw';" }, true, "JWT"],
-  ["chave privada é barrada", { "src/a.txt": "-----BEGIN RSA PRIVATE KEY-----" }, true, "chave privada"],
+  // Valores de teste montados em tempo de execução: assim nenhum scanner estático os confunde com segredo real.
+  ["JWT é barrado", { "src/a.ts": "const j = '" + ["eyJ" + "h".repeat(20), "eyJ" + "s".repeat(20), "x".repeat(20)].join(".") + "';" }, true, "JWT"],
+  ["chave privada é barrada", { "src/a.txt": "-----BEGIN " + "RSA PRIVATE KEY" + "-----" }, true, "chave privada"],
   ["senha em código é barrada", { "src/a.ts": "const senha = 'abc12345';" }, true, "segredo"],
   ["caminho local é barrado", { "dist/a.html": "<p>C:\\Users\\alguem\\projeto</p>" }, true, "caminho local"],
   ["script embutido no HTML é barrado (CSP)", { "dist/a.html": "<script>alert(1)</script>" }, true, "script"],

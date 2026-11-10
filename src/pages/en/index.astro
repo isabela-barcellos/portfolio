@@ -1,0 +1,157 @@
+---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+import Base from "../../layouts/Base.astro";
+import Icon from "../../components/Icon.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { perfil } from "../../data/site";
+import { perfilEn, faixaTechEn, numerosEn, focoEn, trajetoriaEn, competenciasEn, cvEn, mensagemContatoEn, casosEn } from "../../data/site.en";
+import foto from "../../assets/perfil.jpg";
+
+const cases = (await getCollection("cases", (c) => !c.data.rascunho)).sort((a, b) => a.data.ordem - b.data.ordem);
+const grupos = [
+  { titulo: "Companies", sub: "Hackathons", itens: cases.filter((c) => c.data.categoria === "empresa") },
+  { titulo: "University", sub: "FIAP challenges", itens: cases.filter((c) => c.data.categoria === "faculdade") },
+];
+
+const mailto = `mailto:${perfil.email}?subject=${encodeURIComponent(mensagemContatoEn.assunto)}&body=${encodeURIComponent(mensagemContatoEn.corpo)}`;
+---
+<Base lang="en" descricao={perfilEn.posicionamento}>
+  <section class="pf-hero">
+    <div class="pf-container pf-hero__grid">
+      <div>
+        <p class="eyebrow">{perfilEn.titulo}</p>
+        <h1 style="margin-top: var(--space-3)">{perfil.nome}</h1>
+        <p class="lead" style="margin-top: var(--space-5)">{perfilEn.posicionamento}</p>
+        <ul class="pf-lines" aria-label="Areas">
+          {perfilEn.linhas.map((l) => <li>{l}</li>)}
+        </ul>
+        <div class="pf-actions">
+          <a class="pf-btn pf-btn--primary" href="#work">View projects <Icon nome="arrow" tamanho={18} /></a>
+          <a class="pf-btn pf-btn--secondary" href={cvEn.arquivo} download={cvEn.nome}><Icon nome="download" tamanho={18} /> Download CV</a>
+          <a class="pf-btn pf-btn--ghost" href={mailto}><Icon nome="mail" tamanho={18} /> Get in touch</a>
+        </div>
+        <div class="pf-actions pf-actions--social">
+          <a class="pf-iconbtn" href={perfil.linkedin} rel="noopener" aria-label="Isabela's LinkedIn"><Icon nome="linkedin" /></a>
+          <a class="pf-iconbtn" href={perfil.github} rel="noopener" aria-label="Isabela's GitHub"><Icon nome="github" /></a>
+        </div>
+      </div>
+      <div class="pf-hero__photo">
+        <div class="pf-photo">
+          <Image src={foto} alt={perfilEn.foto.alt} widths={[340, 680]} sizes="(min-width: 860px) 340px, 68vw" loading="eager" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pf-strip" data-strip role="region" aria-label="Technologies and tools">
+    <div class="pf-strip__track">
+      {faixaTechEn.map((t) => <span>{t}</span>)}
+      {faixaTechEn.map((t) => <span class="pf-strip__dup" aria-hidden="true">{t}</span>)}
+    </div>
+    <button type="button" class="pf-strip__pause" data-pause aria-pressed="false" aria-label="Pause the technologies scroll">
+      <span class="pf-strip__ico-pause"><Icon nome="pause" tamanho={18} /></span>
+      <span class="pf-strip__ico-play"><Icon nome="play" tamanho={18} /></span>
+    </button>
+  </div>
+
+  <section class="pf-section" style="padding-bottom: 0">
+    <div class="pf-container">
+      <ul class="pf-stats" aria-label="Numbers">
+        {numerosEn.map((n) => <li><span class="v">{n.valor}</span><span class="l">{n.rotulo}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="pf-section" id="ia">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">Focus</p><h2>Generative AI in practice</h2></div>
+      <ul class="pf-tiles">
+        {focoEn.map((f) => (
+          <li class="pf-tile">
+            <span class="pf-tile__ico"><Icon nome={f.icone} tamanho={24} /></span>
+            <h3><a href={f.href}>{f.titulo}</a></h3>
+            <p>{f.linha}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="pf-section" id="work" style="padding-top: 0">
+    <div class="pf-container">
+      <div class="pf-sh">
+        <p class="eyebrow">What I built</p>
+        <h2>Selected work</h2>
+        <p class="muted">Case studies are written in Portuguese. <a href="/#projetos">See all projects (in Portuguese)</a>.</p>
+      </div>
+      {grupos.map((gr) => gr.itens.length > 0 && (
+        <div class="pf-group">
+          <h3 class="pf-group__title">{gr.titulo} <span class="pf-group__sub">{gr.sub}</span></h3>
+          <div class="pf-grid">
+            {gr.itens.map((c) => {
+              const e = casosEn[c.id];
+              return <ProjectCard id={c.id} titulo={e.titulo} linha={e.linha} selo={e.selo} capa={c.data.capa} capaAlt={`Screen from the ${e.titulo} project`} capaTexto={e.capaTexto ?? c.data.capa_texto} icone={c.data.icone} verDetalhes="View details" />;
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="pf-section" id="experience" style="padding-top: 0">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">Experience</p><h2>Where I worked</h2></div>
+      <div class="pf-acc">
+        {trajetoriaEn.map((t) => (
+          <details class="pf-job">
+            <summary>
+              <span class="pf-job__main"><span class="co">{t.empresa}</span><span class="rl">{t.funcao}</span></span>
+              <span class="pf-job__per">{t.periodo}</span>
+            </summary>
+            <div class="pf-acc__body"><ul>{t.marcadores.map((m) => <li>{m}</li>)}</ul></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pf-section" id="skills" style="padding-top: 0">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">Tools and foundations</p><h2>Skills</h2></div>
+      <div class="pf-skills">
+        {competenciasEn.map((g) => (
+          <div>
+            <h3>{g.area}</h3>
+            <ul class="pf-tags">{g.itens.map((i) => <li class="pf-tag">{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="pf-section" id="contact" style="padding-top: 0">
+    <div class="pf-container">
+      <div class="pf-sh"><p class="eyebrow">Contact</p><h2>Let's talk</h2></div>
+      <div class="pf-actions" style="margin-top: 0">
+        <a class="pf-btn pf-btn--primary" href={mailto}><Icon nome="mail" tamanho={18} /> Get in touch</a>
+        <a class="pf-btn pf-btn--secondary" href={cvEn.arquivo} download={cvEn.nome}><Icon nome="download" tamanho={18} /> Download CV</a>
+        <a class="pf-btn pf-btn--ghost" href={perfil.linkedin} rel="noopener"><Icon nome="linkedin" tamanho={18} /> LinkedIn</a>
+        <a class="pf-btn pf-btn--ghost" href={perfil.github} rel="noopener"><Icon nome="github" tamanho={18} /> GitHub</a>
+        <a class="pf-btn pf-btn--ghost" href={perfil.repositorio} rel="noopener"><Icon nome="github" tamanho={18} /> Source code of this site</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Pauses/resumes the technologies strip. The CSS already keeps it still for users who prefer reduced motion.
+  const faixa = document.querySelector<HTMLElement>("[data-strip]");
+  const botao = document.querySelector<HTMLButtonElement>("[data-pause]");
+  botao?.addEventListener("click", () => {
+    const pausado = faixa?.getAttribute("data-paused") === "true";
+    faixa?.setAttribute("data-paused", pausado ? "false" : "true");
+    botao.setAttribute("aria-pressed", pausado ? "false" : "true");
+    botao.setAttribute("aria-label", pausado ? "Pause the technologies scroll" : "Resume the technologies scroll");
+  });
+</script>

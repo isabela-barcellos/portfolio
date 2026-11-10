@@ -11,56 +11,81 @@ import "../styles/v2.css";
 import "../styles/v3.css";
 import Icon from "../components/Icon.astro";
 import { perfil, mensagemContato } from "../data/site";
+import { perfilEn, mensagemContatoEn } from "../data/site.en";
 
-const mailto = `mailto:${perfil.email}?subject=${encodeURIComponent(mensagemContato.assunto)}&body=${encodeURIComponent(mensagemContato.corpo)}`;
-
-interface Props { titulo?: string; descricao?: string }
-const { titulo, descricao = perfil.posicionamento || `${perfil.nome}, ${perfil.titulo}. Projetos, trajetória e processo.` } = Astro.props;
-const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Portfólio`;
+interface Props {
+  titulo?: string; descricao?: string;
+  lang?: "pt-BR" | "en";
+  // Versões da mesma página em outros idiomas (hreflang). Padrão: só a Home e /en/ formam o par.
+  alternates?: { pt?: string; en?: string };
+}
+const { titulo, lang = "pt-BR", } = Astro.props;
+const en = lang === "en";
+const msg = en ? mensagemContatoEn : mensagemContato;
+const mailto = `mailto:${perfil.email}?subject=${encodeURIComponent(msg.assunto)}&body=${encodeURIComponent(msg.corpo)}`;
+const descricao = Astro.props.descricao ?? (en ? perfilEn.posicionamento : (perfil.posicionamento || `${perfil.nome}, ${perfil.titulo}. Projetos, trajetória e processo.`));
+const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · ${en ? "Portfolio" : "Portfólio"}`;
+const ehHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/";
+const alternates = Astro.props.alternates ?? (ehHome ? { pt: "/", en: "/en/" } : undefined);
+const abs = (p: string) => new URL(p, Astro.site).href;
+const T = en
+  ? { skip: "Skip to content", home: "/en/", navLabel: "Main", menu: "Menu", work: "Work", ia: "AI", exp: "Experience", contato: "Contact", como: "Process (PT)", falar: "Get in touch",
+      tema: "Switch between light and dark theme", idioma: "Ler em português", idiomaTxt: "PT", idiomaHref: "/", idiomaLang: "pt-BR",
+      codigo: "Source code", topo: "Back to top", privacidade: "This site uses no cookies or analytics. It only stores your theme choice in your browser.",
+      hrefs: { work: "/en/#work", ia: "/en/#ia", exp: "/en/#experience", contato: "/en/#contact" }, locale: "en_US", ogAlt: "Isabela Barcellos Freire, developer and generative AI" }
+  : { skip: "Ir para o conteúdo", home: "/", navLabel: "Principal", menu: "Menu", work: "Projetos", ia: "IA generativa", exp: "Trajetória", contato: "Contato", como: "Como foi feito", falar: "Falar comigo",
+      tema: "Alternar entre tema claro e escuro", idioma: "Read in English", idiomaTxt: "EN", idiomaHref: "/en/", idiomaLang: "en",
+      codigo: "Código-fonte", topo: "Voltar ao topo", privacidade: "Este site não usa cookies nem ferramentas de análise. Só guarda no seu navegador a sua escolha de tema.",
+      hrefs: { work: "/#projetos", ia: "/#ia", exp: "/#trajetoria", contato: "/#contato" }, locale: "pt_BR", ogAlt: "Isabela Barcellos Freire, desenvolvedora e IA generativa" };
 ---
 <!doctype html>
-<html lang="pt-BR">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={descricao} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+    {alternates?.pt && <link rel="alternate" hreflang="pt-BR" href={abs(alternates.pt)} />}
+    {alternates?.en && <link rel="alternate" hreflang="en" href={abs(alternates.en)} />}
+    {alternates?.pt && <link rel="alternate" hreflang="x-default" href={abs(alternates.pt)} />}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={descricao} />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale" content={T.locale} />
     <meta property="og:image" content={new URL("/og.png", Astro.site).href} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Isabela Barcellos Freire, desenvolvedora e IA generativa" />
+    <meta property="og:image:alt" content={T.ogAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script is:inline src="/theme.js"></script>
   </head>
   <body>
-    <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+    <a class="skip" href="#conteudo">{T.skip}</a>
     <header class="pf-nav">
       <div class="pf-container">
-        <a class="name" href="/" aria-label={perfil.nome}>
+        <a class="name" href={T.home} aria-label={perfil.nome}>
           <span class="name__full" aria-hidden="true">{perfil.nome}</span>
           <span class="name__short" aria-hidden="true">{perfil.nomeCurto}</span>
         </a>
         <div class="pf-nav__right">
-          <nav aria-label="Principal">
+          <nav aria-label={T.navLabel}>
             <details class="pf-menu">
-              <summary>Menu</summary>
+              <summary>{T.menu}</summary>
               <ul>
-                <li><a href="/#projetos">Projetos</a></li>
-                <li><a href="/#ia">IA generativa</a></li>
-                <li><a href="/#trajetoria">Trajetória</a></li>
-                <li><a href="/#contato">Contato</a></li>
-                <li><a href="/como-foi-feito/">Como foi feito</a></li>
+                <li><a href={T.hrefs.work}>{T.work}</a></li>
+                <li><a href={T.hrefs.ia}>{T.ia}</a></li>
+                <li><a href={T.hrefs.exp}>{T.exp}</a></li>
+                <li><a href={T.hrefs.contato}>{T.contato}</a></li>
+                <li><a href="/como-foi-feito/">{T.como}</a></li>
+                <li class="pf-menu__lang"><a href={T.idiomaHref} hreflang={T.idiomaLang} lang={T.idiomaLang}>{T.idiomaTxt === "EN" ? "English" : "Português"}</a></li>
               </ul>
             </details>
           </nav>
-          <a class="pf-btn pf-btn--primary pf-nav__cta" href={mailto}>Falar comigo</a>
-          <button type="button" class="pf-theme" data-theme-toggle aria-label="Alternar entre tema claro e escuro">
+          <a class="pf-btn pf-btn--primary pf-nav__cta" href={mailto}>{T.falar}</a>
+          <a class="pf-theme pf-lang" href={T.idiomaHref} hreflang={T.idiomaLang} lang={T.idiomaLang} aria-label={T.idioma}>{T.idiomaTxt}</a>
+          <button type="button" class="pf-theme" data-theme-toggle aria-label={T.tema}>
             <span class="pf-theme__sun"><Icon nome="sun" /></span>
             <span class="pf-theme__moon"><Icon nome="moon" /></span>
           </button>
@@ -72,15 +97,15 @@ const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Po
       <div class="pf-container">
         <span>© {new Date().getFullYear()} {perfil.nome}</span>
         <span class="pf-foot-links">
-          <a class="pf-top" href={perfil.repositorio} rel="noopener"><Icon nome="github" tamanho={16} /> Código-fonte</a>
-          <a class="pf-top" href="#">Voltar ao topo <Icon nome="arrow" tamanho={16} /></a>
+          <a class="pf-top" href={perfil.repositorio} rel="noopener"><Icon nome="github" tamanho={16} /> {T.codigo}</a>
+          <a class="pf-top" href="#">{T.topo} <Icon nome="arrow" tamanho={16} /></a>
         </span>
-        <p class="pf-privacy">Este site não usa cookies nem ferramentas de análise. Só guarda no seu navegador a sua escolha de tema.</p>
+        <p class="pf-privacy">{T.privacidade}</p>
       </div>
     </footer>
     <script>
       const menu = document.querySelector<HTMLDetailsElement>(".pf-menu");
-      const desktop = matchMedia("(min-width: 900px)");
+      const desktop = matchMedia("(min-width: 1100px)");
       const sincronizar = () => { if (!menu) return; if (desktop.matches) menu.setAttribute("open", ""); else menu.removeAttribute("open"); };
       sincronizar();
       desktop.addEventListener("change", sincronizar);
