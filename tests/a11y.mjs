@@ -56,6 +56,9 @@ for (const tema of ["light", "dark"]) {
     const b = await ctxB.newPage();
     const violacoes = [];
     a.on("console", (m) => /Content Security Policy|Refused to/i.test(m.text()) && violacoes.push(m.text().slice(0, 140)));
+    // Nenhuma requisição a terceiros em tempo de execução (fontes, scripts, estilos, imagens).
+    const externos = new Set();
+    a.on("request", (r) => { const u = r.url(); if (!u.startsWith(base) && !u.startsWith("data:") && !u.startsWith("blob:")) externos.add(new URL(u).origin); });
     for (const rota of paginas) {
       const id = `${rota} [${tema}, ${largura}px]`;
       await a.goto(base + rota, { waitUntil: "networkidle" });
@@ -71,6 +74,7 @@ for (const tema of ["light", "dark"]) {
         if (nos.length) falhas.push(`${id}: axe ${v.id} (${v.impact}) x${nos.length}: ${v.help}`);
       }
     }
+    if (externos.size) falhas.push(`${tema}, ${largura}px: requisições a terceiros: ${[...externos].join(", ")}`);
     if (violacoes.length) falhas.push(`${tema}, ${largura}px: violações de CSP: ${[...new Set(violacoes)].join(" ; ")}`);
     await ctxA.close();
     await ctxB.close();

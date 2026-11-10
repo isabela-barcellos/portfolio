@@ -2,7 +2,7 @@
 
 Site estático em [Astro](https://astro.build) com design system próprio, textos curtos e detalhes só ao clicar. Foi construído por orquestração de agentes de IA (Claude Code e Maestri) com validação humana, e o próprio repositório mostra o método: verificações automáticas decidem o que pode ir ao ar.
 
-Site: https://portifolio-six-pi-27.vercel.app
+Site: https://isabela-barcellos.vercel.app
 
 ## O que tem aqui
 
@@ -36,7 +36,7 @@ O teste de acessibilidade usa `playwright-core` e precisa de um Chrome/Chromium.
 - **`npm run verificar`** roda no build da Vercel e **reprova a publicação** se encontrar: celular brasileiro, e-mail não autorizado, tokens (GitHub, AWS, `sk-`, JWT), chaves privadas, senhas em código, caminhos locais, EXIF em fotos, `<script>` embutido (o CSP o bloquearia) e comentários HTML publicados.
 - Dados pessoais específicos (telefone, bairro) **não ficam no código**: o verificador os lê de `_entrada-privada/padroes-privados.txt`, que está no `.gitignore`. Por isso, **na CI e em clones públicos valem só as regras genéricas**; os padrões pessoais só valem na máquina de quem tem esse arquivo.
 - O verificador procura por padrões: reduz o risco, mas não prova que não há dado sensível. Um scanner dedicado de segredos (por exemplo o gitleaks) deve rodar antes de cada publicação grande, como segunda camada.
-- **CSP restritiva e cabeçalhos de segurança** em `vercel.json` (`script-src 'self'`, sem iframes, sem câmera/microfone).
+- **CSP restritiva e cabeçalhos de segurança** em `vercel.json` (`script-src 'self'`, `font-src 'self'`, sem iframes, sem câmera/microfone). **As fontes (IBM Plex, licença OFL) são hospedadas no próprio site**: a página não chama o Google nem outro terceiro em tempo de execução, o que também evita enviar o IP do visitante a terceiros.
 - A decisão está registrada em [`docs/adr/0001-site-estatico-csp-e-verificacao.md`](docs/adr/0001-site-estatico-csp-e-verificacao.md).
 
 ## Estrutura

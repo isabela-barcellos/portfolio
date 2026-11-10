@@ -4,7 +4,7 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   output: "static",
   // Endereço público: usado nas metatags de compartilhamento (og:image exige URL absoluta). Trocar se o domínio mudar.
-  site: "https://portifolio-six-pi-27.vercel.app",
+  site: "https://isabela-barcellos.vercel.app",
   // O CSP (vercel.json) só aceita script de arquivo próprio: nada de <script> embutido na página.
   vite: { build: { assetsInlineLimit: 0 } },
 });

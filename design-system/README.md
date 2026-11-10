@@ -26,7 +26,7 @@ Sistema visual do portfólio: azul-noite como base, rosa como cor de marca e cia
 
 ## Tipografia
 
-- **Títulos e rótulos em IBM Plex Mono** (600 nos títulos), **corpo em IBM Plex Sans** para leitura longa. Carregue as duas pelo Google Fonts (Mono 400, 500, 600; Sans 400, 500, 600).
+- **Títulos e rótulos em IBM Plex Mono** (600 nos títulos), **corpo em IBM Plex Sans** para leitura longa. Hospedadas no próprio site via Fontsource, licença OFL (Mono e Sans em 400, 500 e 600, subconjunto latin), sem carregar nada do Google em tempo de execução.
 - Hero em `display-xl` (48px), título de seção em `display-md` (28px), título de cartão em `title`, texto corrido em `body`, descrição de cartão em `body-sm`.
 - Texto corrido nunca passa de `measure-max`.
 
