@@ -21,6 +21,14 @@ export function verificar(fatos, c, saida) {
       const novos = numeros(saida.replace(/^\s*\d+[.)]\s+/gm, "")).filter((n) => !permitidos.has(n));
       return { ok: novos.length === 0, motivo: novos.length ? `números que não estavam nos fatos: ${[...new Set(novos)].join(", ")}` : "" };
     }
+    case "sem_datas": {
+      // Sem número novo (anos, dias) e sem nome de mês: "em março" também é data inventada.
+      const permitidos = new Set(numeros(entrada));
+      const novos = numeros(saida.replace(/^\s*\d+[.)]\s+/gm, "")).filter((n) => !permitidos.has(n));
+      const meses = saida.match(/\b(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)\b/gi) ?? [];
+      const probs = [...(novos.length ? [`números novos: ${[...new Set(novos)].join(", ")}`] : []), ...(meses.length ? [`meses: ${[...new Set(meses.map((m) => m.toLowerCase()))].join(", ")}`] : [])];
+      return { ok: probs.length === 0, motivo: probs.join("; ") };
+    }
     case "nao_contem": {
       const achados = v.termos.filter((t) => saida.toLowerCase().includes(t.toLowerCase()));
       return { ok: achados.length === 0, motivo: achados.length ? `contém: ${achados.join(", ")}` : "" };

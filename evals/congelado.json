@@ -1,0 +1,5 @@
+{
+  "prompt": "v2",
+  "sha256": "099f1c24d6d2774e1f6ffa6019d63f166977ac66f02c38e5506d6a7c53eb3422",
+  "observacao": "Hash do prompt v2 no momento em que os casos novos foram escritos, antes de qualquer resposta a eles. avaliar.mjs recusa rodar os casos novos se o prompt v2 mudar."
+}

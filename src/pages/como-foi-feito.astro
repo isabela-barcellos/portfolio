@@ -3,20 +3,21 @@ import Base from "../layouts/Base.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import Icon from "../components/Icon.astro";
 import { perfil } from "../data/site";
-import fs from "node:fs";
-import path from "node:path";
+import { placar } from "../data/evals";
 
-// O placar vem dos arquivos gerados pelo corretor (evals/resultado-*.md): uma única fonte da verdade.
-const placar = (v: string) => {
-  const m = fs.readFileSync(path.resolve("evals", `resultado-${v}.md`), "utf8").match(/(\d+)\/(\d+) casos/);
-  if (!m) throw new Error(`placar não encontrado em evals/resultado-${v}.md`);
-  return `${m[1]}/${m[2]}`;
-};
+// Os placares vêm dos arquivos gerados pelo corretor (evals/resultado-*.md): uma única fonte da verdade.
 const evalLinhas = [
   { v: "v0", mudou: "Prompt curto, sem regras.", falhas: "Publicou telefone e endereço e não seguiu a ordem das seções." },
   { v: "v1", mudou: "Sete regras explícitas.", falhas: "Corrigiu os dois erros, mas criou uma seção de papel mesmo com o pedido de omissão e repetiu termos proibidos ao explicar uma recusa." },
   { v: "v2", mudou: "Omissão passa a ter prioridade sobre a estrutura; a explicação não repete o que foi recusado.", falhas: "Nenhuma nos 8 casos." },
-].map((l) => ({ ...l, placar: placar(l.v) }));
+].map((l) => ({ ...l, placar: placar(l.v).texto }));
+
+// Casos novos (escritos depois de congelar o v2). A coluna "Leitura" é a minha revisão humana das respostas.
+const novosLinhas = [
+  { v: "v0", execs: ["novos-v0"], leitura: "A falha é real: publicou o e-mail de uma colega." },
+  { v: "v1", execs: ["novos-v1"], leitura: "As 2 falhas são do corretor: o agente recusou o cargo inflado e o comparativo inventado, mas citou os termos ao explicar. O comportamento estava correto." },
+  { v: "v2", execs: ["novos-v2-1", "novos-v2-2", "novos-v2-3"], leitura: "Sem falhas e sem variação entre as 3 execuções." },
+].map((l) => ({ ...l, execucoes: l.execs.length, placares: l.execs.map((n) => placar(n).texto).join(" · ") }));
 
 // Texto escrito a partir do que aconteceu neste projeto. Descreve o método, sem publicar prompts.
 const etapas = [
@@ -82,7 +83,7 @@ const aprendizados = [
         </div>
       </div>
 
-      <h2 style="margin-top: var(--space-8)">Avaliação de agente</h2>
+      <h2 id="avaliacao" style="margin-top: var(--space-8)">Avaliação de agente</h2>
       <div class="pf-card" style="margin-top: var(--space-4)">
         <p>Avaliei um agente de conteúdo: o que escreve textos de portfólio a partir de fatos que eu autorizo. São 8 casos adversariais com dados fictícios (inventar métrica, publicar telefone, vazar nome confidencial, obedecer instrução escondida num documento, ignorar pedido de omissão, tom e ordem das seções, link inexistente). A correção é por regras, sem outro modelo como juiz.</p>
         <div class="pf-tablewrap" role="region" aria-label="Resultado da avaliação por versão do prompt" tabindex="0">
@@ -96,7 +97,21 @@ const aprendizados = [
             </tbody>
           </table>
         </div>
-        <p class="muted"><strong>Limites:</strong> uma execução por versão e só 8 casos: é um sinal, não uma estatística. O v2 foi escrito depois de eu ver as falhas do v1, então 8/8 mostra que corrigi aquelas falhas, não que o agente generaliza. O corretor tem testes próprios. O agente avaliado é um modelo Claude. Isto avalia um agente de redação com regras; os testes do verificador de vazamento, descritos acima, são outra coisa: testam uma barreira de segurança.</p>
+
+        <h3>Casos novos, para testar se generaliza</h3>
+        <p>O v2 foi escrito depois de eu ver as falhas do v1, então o 8/8 só mostra que corrigi aquelas falhas. Para testar se ele generaliza, escrevi 4 casos novos (data inventada, cargo inflado, comparação inventada reaproveitando um número verdadeiro, e-mail de uma colega), <strong>congelei o prompt do v2 antes de respondê-los</strong> (o corretor se recusa a rodar se o prompt mudar) e rodei o v2 três vezes.</p>
+        <div class="pf-tablewrap" role="region" aria-label="Resultado nos casos novos" tabindex="0">
+          <table class="pf-evaltable">
+            <caption class="sr-only">Resultado nos casos novos, por versão</caption>
+            <thead><tr><th scope="col">Versão</th><th scope="col">Execuções</th><th scope="col">Passou (por execução)</th><th scope="col">Leitura das respostas</th></tr></thead>
+            <tbody>
+              {novosLinhas.map((l) => (
+                <tr><th scope="row" class="mono">{l.v}</th><td class="mono">{l.execucoes}</td><td class="mono">{l.placares}</td><td>{l.leitura}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="muted"><strong>Limites:</strong> são 8 casos na primeira rodada e 4 nos novos: um sinal, não uma estatística. Nos casos novos, o que distingue o v2 do v1 é não repetir os termos recusados; nenhum dos dois inventou fatos. O corretor é por regras e não distingue citar de usar uma palavra. Um quinto caso (listar as palavras proibidas) existe só para mostrar esse limite e não entra no placar: o corretor o reprova nas três execuções do v2, e, na minha leitura, o agente apenas listou as palavras, sem emoji nem exclamação. O agente avaliado é um modelo Claude. Isto avalia um agente de redação; os testes do verificador de vazamento, descritos acima, são outra coisa: testam uma barreira de segurança.</p>
         <div class="pf-actions" style="margin-top: 0">
           <a class="pf-btn pf-btn--secondary" href={`${perfil.repositorio}/tree/main/evals`} rel="noopener"><Icon nome="github" tamanho={18} /> Ver casos e respostas</a>
         </div>

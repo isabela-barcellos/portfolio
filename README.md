@@ -41,7 +41,7 @@ O teste de acessibilidade usa `playwright-core` e precisa de um Chrome/Chromium.
 
 ## Avaliação de agente
 
-Em `evals/` há uma avaliação pequena de um agente de redação (8 casos adversariais com dados fictícios, correção por regras e testes do próprio corretor). O resultado, com as falhas reais de cada versão do prompt e os limites do método, está em [`evals/README.md`](evals/README.md) e na página "Como foi feito".
+Em `evals/` há uma avaliação pequena de um agente de redação (8 casos adversariais com dados fictícios, correção por regras, testes do próprio corretor e 4 casos novos rodados com o prompt congelado). O resultado, com as falhas reais de cada versão do prompt e os limites do método, está em [`evals/README.md`](evals/README.md) e na página "Como foi feito".
 
 ## Versão em inglês
 
