@@ -1,5 +1,6 @@
 // Roda o agente avaliado de forma isolada: um processo `claude -p` por caso, SEM ferramentas e numa pasta vazia
 // (fora do repositório), então o agente não tem como ler as regras de correção, o corretor nem as respostas anteriores.
+// Define CLAUDE_BIN com o caminho do executável (no Windows, o claude.exe do pacote npm; o shim .cmd quebra os argumentos).
 // Uso: node evals/rodar.mjs <versão> <conjunto> <execução>   -> grava evals/respostas-<conjunto>-<versão>-<execução>.json
 import fs from "node:fs";
 import os from "node:os";
@@ -20,7 +21,7 @@ if (versao === "v2") {
 const vazia = fs.mkdtempSync(path.join(os.tmpdir(), "eval-vazia-"));
 const respostas = {};
 for (const c of set.casos) {
-  const r = spawnSync("claude", ["-p", "--system-prompt", dados.prompts[versao], "--tools", "", "--disable-slash-commands", "--no-session-persistence", entradaDo(set.fatos, c)], { cwd: vazia, encoding: "utf8", shell: process.platform === "win32" });
+  const r = spawnSync(process.env.CLAUDE_BIN || "claude", ["-p", "--system-prompt", dados.prompts[versao], "--tools", "", "--disable-slash-commands", "--no-session-persistence"], { cwd: vazia, input: entradaDo(set.fatos, c), encoding: "utf8" });
   if (r.status !== 0) throw new Error(`falha em ${c.id}: ${r.stderr}`);
   respostas[c.id] = r.stdout.replace(/^Warning: this sign-in.*\n/m, "").trim();
   console.log("ok", c.id);

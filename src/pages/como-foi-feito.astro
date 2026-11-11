@@ -3,7 +3,7 @@ import Base from "../layouts/Base.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import Icon from "../components/Icon.astro";
 import { perfil } from "../data/site";
-import { placar } from "../data/evals";
+import { placar, juiz, execucoesNovos2 } from "../data/evals";
 
 // Os placares vêm dos arquivos gerados pelo corretor (evals/resultado-*.md): uma única fonte da verdade.
 const evalLinhas = [
@@ -11,6 +11,15 @@ const evalLinhas = [
   { v: "v1", mudou: "Sete regras explícitas.", falhas: "Corrigiu os dois erros, mas criou uma seção de papel mesmo com o pedido de omissão e repetiu termos proibidos ao explicar uma recusa." },
   { v: "v2", mudou: "Omissão passa a ter prioridade sobre a estrutura; a explicação não repete o que foi recusado.", falhas: "Nenhuma nos 8 casos." },
 ].map((l) => ({ ...l, placar: placar(l.v).texto }));
+
+// Segundo conjunto: outro projeto, sem problema declarado; corretor por regras + juiz cego. "minha" é a minha leitura (uma só avaliadora).
+const novos2Linhas = [
+  { v: "v2", minha: "8 de 9; a outra, limítrofe" },
+  { v: "v1", minha: "2 de 3; a outra, limítrofe" },
+].map((l) => {
+  const j = juiz("novos2", l.v);
+  return { ...l, execucoes: execucoesNovos2[l.v].length, placares: execucoesNovos2[l.v].map((n) => placar(n).texto).join(" · "), juiz: `${j.inventa} de ${j.total}` };
+});
 
 // Casos novos (escritos depois de congelar o v2). A coluna "Leitura" é a minha revisão humana das respostas.
 const novosLinhas = [
@@ -111,7 +120,22 @@ const aprendizados = [
             </tbody>
           </table>
         </div>
-        <p class="muted"><strong>Limites:</strong> são 8 casos na primeira rodada e 4 nos novos: um sinal, não uma estatística. Os casos novos usam o mesmo projeto fictício e os mesmos fatos: variam a pressão, não o contexto. O que distingue o v2 do v1 neles é não repetir os termos recusados, e o v2 tem uma regra escrita justamente contra esse comportamento, então passar era esperado. Nem o v1 nem o v2 inventaram números, datas, links ou dados pessoais, mas os dois preencheram a seção Problema com uma afirmação qualitativa que os fatos não trazem ("responder uma a uma consome tempo"), e o v2 citou o nome da colega sem o e-mail. O corretor só procura números, datas, links e termos listados, então não vê esse tipo de invenção. Ele também não distingue citar de usar uma palavra. Um quinto caso (listar as palavras proibidas) existe só para mostrar esse limite e não entra no placar: o corretor o reprova nas três execuções do v2, e, na minha leitura, o agente apenas listou as palavras, sem emoji nem exclamação. O congelamento prova que o prompt do v2 não mudou, não a ordem em que escrevi os casos e rodei os agentes (está tudo num mesmo commit), e os agentes rodaram com acesso ao repositório, onde ficam as regras de correção, embora instruídos a não lê-las. O agente avaliado é um modelo Claude. Isto avalia um agente de redação; os testes do verificador de vazamento, descritos acima, são outra coisa: testam uma barreira de segurança.</p>
+        <h3>Segundo conjunto: outro projeto, sem problema declarado</h3>
+        <p>Os primeiros casos novos usavam os mesmos fatos, então escrevi um segundo conjunto com <strong>outro projeto fictício</strong> (um painel de pedidos) e fatos que não trazem nenhum problema, motivação ou resultado. Publiquei os casos, a rubrica e o plano no git <strong>antes</strong> de qualquer resposta (commit <span class="mono">06b9084</span>) e rodei os agentes sem ferramentas, numa pasta vazia fora do repositório, sem como ler as regras de correção. Além do corretor, um juiz cego (um modelo Claude, com respostas embaralhadas e sem a versão do prompt) apontou frases que os fatos não sustentam. O prompt v2 continuou o mesmo.</p>
+        <div class="pf-tablewrap" role="region" aria-label="Resultado no segundo conjunto de casos novos" tabindex="0">
+          <table class="pf-evaltable">
+            <caption class="sr-only">Resultado no segundo conjunto, por versão</caption>
+            <thead><tr><th scope="col">Versão</th><th scope="col">Execuções</th><th scope="col">Corretor (por execução)</th><th scope="col">Juiz: respostas que inventam</th><th scope="col">Minha leitura</th></tr></thead>
+            <tbody>
+              {novos2Linhas.map((l) => (
+                <tr><th scope="row" class="mono">{l.v}</th><td class="mono">{l.execucoes}</td><td class="mono">{l.placares}</td><td class="mono">{l.juiz}</td><td>{l.minha}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Leitura:</strong> aqui o v2 <strong>não generalizou</strong>. Nos três casos em que o texto não deveria afirmar nada sem base (problema, motivação e elogio), ele escreveu uma seção Problema com uma dor que os fatos não trazem (por exemplo, "uma loja de bairro precisa saber em que ponto está cada pedido") em quase todas as respostas. O corretor não vê isso: ele deu 3/5, 4/5 e 3/5, e três dessas falhas são o agente citando a palavra que recusou, não usando. A falha real do corretor é o nome do colega: o v2 e o v1 não publicam o e-mail, mas publicam o nome. A coluna "Minha leitura" é a de uma única avaliadora, que também sou eu, e o juiz foi inconsistente em dois casos (marcou uma resposta como limpa onde eu vejo invenção, e listou frases não apoiadas em outra e mesmo assim a deu como limpa); por isso mostro as duas. O que isso diz: o v2 corrigiu o que o v1 errava no primeiro conjunto, mas não resolveu a invenção qualitativa. Não alterei o prompt para fechar esse buraco; seria uma v3, a ser testada com casos novos.</p>
+
+        <p class="muted"><strong>Limites:</strong> são 8 casos na primeira rodada, 4 nos primeiros casos novos e 5 no segundo conjunto: um sinal, não uma estatística. Os primeiros casos novos usam o mesmo projeto fictício e os mesmos fatos: variam a pressão, não o contexto. O que distingue o v2 do v1 neles é não repetir os termos recusados, e o v2 tem uma regra escrita justamente contra esse comportamento, então passar era esperado. Nem o v1 nem o v2 inventaram números, datas, links ou dados pessoais, mas os dois preencheram a seção Problema com uma afirmação qualitativa que os fatos não trazem ("responder uma a uma consome tempo"), e o v2 citou o nome da colega sem o e-mail. O corretor só procura números, datas, links e termos listados, então não vê esse tipo de invenção. Ele também não distingue citar de usar uma palavra. Um quinto caso (listar as palavras proibidas) existe só para mostrar esse limite e não entra no placar: o corretor o reprova nas três execuções do v2, e, na minha leitura, o agente apenas listou as palavras, sem emoji nem exclamação. Nos primeiros casos novos o congelamento prova que o prompt do v2 não mudou, mas não a ordem em que escrevi os casos e rodei os agentes (tudo num mesmo commit), e os agentes tinham acesso ao repositório; no segundo conjunto a ordem está no histórico do git e o isolamento é real. O juiz é da mesma família do agente avaliado, e o segundo conjunto também usa um único projeto, com poucas execuções. O agente avaliado é um modelo Claude. Isto avalia um agente de redação; os testes do verificador de vazamento, descritos acima, são outra coisa: testam uma barreira de segurança.</p>
         <div class="pf-actions" style="margin-top: 0">
           <a class="pf-btn pf-btn--secondary" href={`${perfil.repositorio}/tree/main/evals`} rel="noopener"><Icon nome="github" tamanho={18} /> Ver casos e respostas</a>
         </div>

@@ -7,11 +7,13 @@ import ProjectCard from "../../components/ProjectCard.astro";
 import { perfil } from "../../data/site";
 import { perfilEn, faixaTechEn, numerosEn, focoEn, trajetoriaEn, competenciasEn, cvEn, mensagemContatoEn, casosEn } from "../../data/site.en";
 import foto from "../../assets/perfil.jpg";
-import { placar, execucoesNovosV2 } from "../../data/evals";
+import { placar, execucoesNovosV2, juiz, execucoesNovos2 } from "../../data/evals";
 
 const placarV0 = placar("v0").texto;
 const placarV1 = placar("v1").texto;
 const placarV2 = placar("v2").texto;
+const juizV2 = juiz("novos2", "v2");
+const execNovos2V2 = execucoesNovos2.v2.map((n) => placar(n).texto).join(" · ");
 const execNovosV2 = execucoesNovosV2.map((n) => placar(n).texto).join(" · ");
 
 const cases = (await getCollection("cases", (c) => !c.data.rascunho)).sort((a, b) => a.data.ordem - b.data.ordem);
@@ -145,8 +147,9 @@ const mailto = `mailto:${perfil.email}?subject=${encodeURIComponent(mensagemCont
           <li>Prompt <span class="mono">v0</span> (no rules): <span class="mono">{placarV0}</span> on the first 8 cases.</li>
           <li>Prompt <span class="mono">v1</span> (explicit rules): <span class="mono">{placarV1}</span>. It fixed v0's errors but introduced two new ones.</li>
           <li>Prompt <span class="mono">v2</span>: <span class="mono">{placarV2}</span>. I wrote it after seeing v1's failures, so I froze it and tested it on 4 new cases in 3 runs: <span class="mono">{execNovosV2}</span>.</li>
+          <li><strong>A second set did not hold up.</strong> I wrote 5 more cases on a different fictional project whose facts state no problem or motivation, published them in git before any answer, and ran the agents with no tools in an empty folder. The frozen v2 scored <span class="mono">{execNovos2V2}</span> with the rule-based grader, but a blind judge (a Claude model) flagged invented claims in <span class="mono">{juizV2.inventa} of {juizV2.total}</span> answers: with no problem stated, v2 wrote one. Three of the grader's failures are false positives (quoting a refused word); publishing a colleague's name is a real one. I did not change the prompt.</li>
         </ul>
-        <p class="muted">Limits: small samples (8 and 4 cases), new cases that reuse the same fictional facts, rule-based grading that cannot tell quoting a word from using it or detect qualitative claims the facts do not support, and a Claude model as the evaluated agent. The detailed write-up is in Portuguese.</p>
+        <p class="muted">Limits: small samples (8 and 4 cases), the first new cases reuse the same fictional facts, one project in the second set, a judge from the same model family, rule-based grading that cannot tell quoting a word from using it or detect qualitative claims the facts do not support, and a Claude model as the evaluated agent. The detailed write-up is in Portuguese.</p>
         <div class="pf-actions" style="margin-top: 0">
           <a class="pf-btn pf-btn--secondary" href="/como-foi-feito/#avaliacao"><Icon nome="arrow" tamanho={18} /> Evaluation (PT)</a>
           <a class="pf-btn pf-btn--ghost" href={`${perfil.repositorio}/tree/main/evals`} rel="noopener"><Icon nome="github" tamanho={18} /> Cases on GitHub</a>

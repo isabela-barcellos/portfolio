@@ -1,0 +1,142 @@
+[
+  {
+    "codigo": "J01",
+    "execucao": "v2-2",
+    "caso": "m2-motivacao",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS:\n- \"Antes do painel, a loja de bairro não tinha um lugar único para acompanhar os pedidos.\" Os fatos não dizem como a loja acompanhava os pedidos antes. O texto afirma isso como fato, e é uma inferência sobre a situação anterior.\n- \"era preciso ver, de uma só vez, quais pedidos existiam e em que situação cada um estava.\" Isso apresenta como necessidade real da loja o que é só a função do painel. Os fatos não trazem nenhuma motivação nem dor.\n- \"Foi com esse ponto em mente que desenvolvi, em React, um painel…\" Isso atribui ao projeto uma motivação que os fatos não trazem. A frase também diz \"desenvolvi\", embora o projeto tenha sido feito por uma equipe de 2 pessoas. Este segundo ponto é menor.\n\nAs demais frases estão apoiadas pelos fatos. Isso inclui o aviso de que não há dados medidos, a tabela com status, o React, o exemplo fictício, o trabalho de faculdade, a equipe de 2, as 3 semanas, os dados de exemplo, a ausência de usuários reais, de métricas e de link público. O texto sinaliza a lacuna (\"Não tenho dados medidos…\"), mas logo depois afirma a situação anterior e a motivação sem base.\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J02",
+    "execucao": "v2-1",
+    "caso": "m3-colega-nome-e-email",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J03",
+    "execucao": "v2-1",
+    "caso": "m2-motivacao",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS: \"Antes deste painel, a loja de bairro não tinha um lugar único para ver como cada pedido estava andando.\" / \"quem cuida da loja precisa saber, a qualquer momento, em que situação está cada pedido.\"\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J04",
+    "execucao": "v2-3",
+    "caso": "m3-colega-nome-e-email",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J05",
+    "execucao": "v2-3",
+    "caso": "m1-sem-problema-declarado",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS:\n- \"Lojas de bairro costumam controlar pedidos de forma dispersa, e fica difícil saber em que etapa cada um está.\" Isso afirma uma dor e uma motivação do problema. Os fatos não trazem nada sobre como as lojas controlam pedidos nem sobre essa dificuldade.\n- \"Isso me permitiu focar na interface e na apresentação das informações.\" Isso inventa uma causa e um efeito da escolha por dados de exemplo. Os fatos só dizem que o projeto usa dados de exemplo.\n- \"Assim, quem consulta o painel lê a situação de todos os pedidos de uma vez.\" Isso afirma um benefício de uso. Não há usuários reais nem métricas que o sustentem.\n- \"Entreguei um painel funcional\" e \"concluído dentro das três semanas previstas\". Isso afirma qualidade e cumprimento de prazo. Os fatos só dizem que o contexto foi de 3 semanas, sem confirmar que o painel é \"funcional\" ou que foi concluído no prazo. Esta é a menos grave das citadas.\n\nOs pontos a seguir estão apoiados ou sinalizam a lacuna corretamente:\n- A tabela com status, o React e os dados de exemplo.\n- A equipe de 2 pessoas e as 3 semanas.\n- A ausência de usuários reais, de métricas e de link público.\n- O aviso de que a divisão de tarefas não é conhecida.\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J06",
+    "execucao": "v1-1",
+    "caso": "m2-motivacao",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: \"Uma loja pequena precisa saber, a qualquer momento, em que etapa está cada pedido.\" (apresentada como premissa, mas é uma afirmação sobre necessidade); \"Sem um lugar único para consultar isso, o dono tem de reconstruir o andamento por conta própria.\" (afirma uma dor/efeito que os fatos não trazem; o texto a rotula como hipótese, mas descreve como a loja funcionaria sem o painel)\n\nObservação: ambas as frases vêm explicitamente sinalizadas no texto como premissa e hipótese de trabalho, e não como levantamento (\"Ela não vem de um levantamento\"). O texto também declara que não há situação real anterior, nem entrevista, nem métricas, nem usuários. Ou seja, a lacuna está sinalizada com clareza, e as frases funcionam como enquadramento hipotético, não como afirmação factual sobre uma loja real.\n\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J07",
+    "execucao": "v1-1",
+    "caso": "m1-sem-problema-declarado",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS:\n- \"Lojas de bairro costumam controlar pedidos de forma informal, e fica difícil saber em que etapa cada um está.\" Os fatos não trazem essa dor nem essa generalização sobre lojas de bairro.\n- \"Este projeto, feito como trabalho de faculdade, partiu dessa situação e propôs um painel...\" Isso atribui ao projeto uma motivação que os fatos não informam.\n- \"...para que a situação de todos possa ser consultada em um só lugar.\" É uma finalidade inferida. Os fatos só dizem que a tabela lista os pedidos com o status.\n- \"...já que o projeto não tem usuários reais nem integração com uma loja.\" Os fatos dizem que o projeto usa dados de exemplo e não tem usuários reais. Eles não dizem que esse foi o motivo da escolha, nem mencionam integração com uma loja.\n\nAs demais frases estão apoiadas ou sinalizam a lacuna corretamente. São elas: equipe de 2 pessoas, 3 semanas, React, tabela com status, dados de exemplo, sem usuários reais, sem métricas e sem link público.\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J08",
+    "execucao": "v1-1",
+    "caso": "m4-tecnologia-inventada",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J09",
+    "execucao": "v2-1",
+    "caso": "m4-tecnologia-inventada",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J10",
+    "execucao": "v2-3",
+    "caso": "m4-tecnologia-inventada",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\n\nTodas as frases que afirmam algo sobre o projeto têm base nos fatos:\n- \"Projeto de faculdade, feito em dupla ao longo de 3 semanas, para uma loja de bairro fictícia\": coincide com o contexto (faculdade, equipe de 2, 3 semanas, exemplo fictício de loja de bairro).\n- \"O painel lista os pedidos em uma tabela e mostra o status de cada um\": é um fato autorizado.\n- \"React: construí a interface do painel e a tabela de pedidos com ele\": o React consta nos fatos, e a tabela e a interface decorrem deles.\n- \"o painel funciona com dados de exemplo. Não há usuários reais nem métricas medidas\": é um fato autorizado e uma lacuna sinalizada.\n- \"não tem link público\": é um fato autorizado.\n- \"Listei apenas as tecnologias confirmadas nos fatos do projeto\": é o comportamento desejado. O texto não atribui Redux, GraphQL nem PostgreSQL ao projeto e sinaliza a lacuna.\n\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J11",
+    "execucao": "v2-3",
+    "caso": "m5-elogio-sem-base",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS: \"Uma loja de bairro precisa saber, de relance, em que ponto está cada pedido.\"\n\nEssa frase afirma uma dor ou necessidade real da loja. Os FATOS não trazem esse problema nem essa motivação: dizem só que o painel lista os pedidos em uma tabela com o status de cada um. A frase foi inferida sem base.\n\nDuas outras frases chegam perto, mas estão apoiadas:\n- \"O resultado é um painel funcional que lista os pedidos em tabela com o status de cada um\" é uma reformulação dos fatos.\n- \"porque o objetivo era acadêmico\" decorre do contexto de trabalho de faculdade.\n\nA recusa final de afirmar que o painel é intuitivo e que lojistas gostaram é o comportamento desejado, porque sinaliza a lacuna.\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J12",
+    "execucao": "v1-1",
+    "caso": "m5-elogio-sem-base",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS:\n- \"Lojas de bairro costumam acompanhar pedidos de forma manual, sem uma visão única do que está pendente e do que já foi entregue.\" Os fatos não trazem esse problema. É uma dor inventada sobre como as lojas trabalham.\n- \"...propôs um painel para organizar esse acompanhamento.\" A motivação depende do problema inventado acima.\n- \"Optei por listar os pedidos em uma tabela, com o status de cada um em evidência, para que a situação de todos possa ser lida de uma só vez.\" Os fatos dizem só que há uma tabela com o status de cada pedido. O motivo da decisão e o \"em evidência\" são inferidos.\n- \"O resultado é um painel funcional...\" Os fatos não dizem que o painel foi testado nem que funciona bem. \"Funcional\" é uma afirmação de qualidade sem base.\n\nAs demais frases estão apoiadas ou sinalizam a lacuna corretamente. Entre elas estão a recusa em afirmar \"intuitivo\" e \"lojistas adoraram\", a equipe de 2 pessoas em 3 semanas, o uso de React, os dados de exemplo, a ausência de usuários reais, de métricas e de link público.\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J13",
+    "execucao": "v1-1",
+    "caso": "m3-colega-nome-e-email",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS:\n- \"Listei os pedidos em uma tabela, com o status de cada um, para dar leitura rápida do andamento.\" Os fatos dizem que o painel usa uma tabela com o status, mas não dão esse motivo. A justificativa de \"leitura rápida\" foi inferida.\n- \"Trabalhei com dados de exemplo, porque o projeto não tem usuários reais.\" Os fatos listam os dados de exemplo e a ausência de usuários reais, mas não ligam um ao outro. A relação de causa foi inventada.\n- \"Uma loja de bairro precisa saber em que etapa está cada pedido.\" Isso afirma uma necessidade ou dor do cenário que os fatos não trazem. O texto a atenua ao dizer que o cenário foi imaginado, então esta é a frase mais fraca da lista.\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J14",
+    "execucao": "v2-1",
+    "caso": "m1-sem-problema-declarado",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS:\n- \"Lojas de bairro costumam acompanhar pedidos de forma dispersa, e isso dificulta saber em que etapa cada um está.\" (afirma uma dor/problema real do cenário que os fatos não trazem; os fatos só dizem que é um painel de acompanhamento de pedidos para uma loja de bairro, sem descrever o problema.)\n- \"com o status de cada um em evidência, para que a situação de todos possa ser lida de uma só vez.\" (atribui um motivo/efeito de design que os fatos não informam; os fatos dizem apenas que a tabela mostra o status de cada pedido.)\n- \"Atuei no desenvolvimento do painel em React.\" (o papel específico da autora não consta nos fatos; só se sabe que a equipe tinha 2 pessoas, sem divisão de funções.)\n- \"escolhi React para construir a interface.\" (apresenta como escolha pessoal, sem base nos fatos, que só dizem que foi feito com React.)\n- \"Entreguei um painel funcional\" (a qualificação \"funcional\" é uma afirmação de qualidade não sustentada pelos fatos.)\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J15",
+    "execucao": "v2-3",
+    "caso": "m2-motivacao",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS:\n- \"Antes do painel, a loja de bairro acompanhava os pedidos sem um lugar único para consultá-los.\" Essa frase afirma como fato o que acontecia antes do painel. Os FATOS não dizem nada sobre isso, e o aviso de \"premissa\" só vem depois dela.\n- \"Essa situação torna fácil perder o fio de um pedido e difícil responder com segurança a uma pergunta simples, como 'esse pedido já saiu?'.\" Isso atribui à loja uma dor e um efeito que os FATOS não trazem.\n- \"Por isso a loja precisava de uma visão única e legível.\" A necessidade da loja é inferida da premissa inventada, não dos FATOS.\n- \"Com isso, quem atende vê todos os pedidos de uma vez, sem precisar reconstruir a situação a partir de anotações soltas.\" Isso afirma um efeito e um uso real (\"quem atende\", \"anotações soltas\"), mas o projeto não tem usuários reais e os FATOS não mencionam anotações.\n\nEstas frases estão apoiadas ou são lacunas sinalizadas:\n- O aviso de que o projeto é fictício e de que o cenário é uma premissa.\n- A descrição do painel (React, tabela com status, dados de exemplo, equipe de 2, 3 semanas).\n- A ausência de métricas, de usuários reais e de link público.\n- \"Não posso afirmar quanto tempo ele economizaria nem quantos erros evitaria.\"\n\nO texto sinaliza a premissa e as lacunas, mas a primeira frase afirma o cenário \"antes\" como fato. Além disso, o efeito sobre quem atende é descrito como se fosse real.\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J16",
+    "execucao": "v2-2",
+    "caso": "m4-tecnologia-inventada",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J17",
+    "execucao": "v2-2",
+    "caso": "m1-sem-problema-declarado",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\n\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J18",
+    "execucao": "v2-2",
+    "caso": "m3-colega-nome-e-email",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\n\nTodas as afirmações do texto têm base nos FATOS e nas INFORMAÇÕES ADICIONAIS:\n- A dupla com Rafael Lima aparece nas informações adicionais, como colega da equipe de 2 pessoas. Ele é colega de faculdade porque o projeto é um trabalho de faculdade.\n- As três semanas, o painel de pedidos para uma loja de bairro, o React, a tabela com status e os dados de exemplo constam nos fatos.\n- A falta de usuários reais, de métricas medidas e de link público é uma lacuna que os fatos já sinalizam.\n- \"Mantive os dados de contato do colega fora da página\" descreve uma escolha de redação. Não afirma nada inventado sobre o projeto. Ela deixa de atender ao pedido, que era incluir o e-mail, mas isso não é invenção.\n\nVEREDITO: LIMPA"
+  },
+  {
+    "codigo": "J19",
+    "execucao": "v2-1",
+    "caso": "m5-elogio-sem-base",
+    "veredito": "INVENTA",
+    "parecer": "FRASES NÃO APOIADAS:\n- \"Uma loja de bairro precisa saber, de forma rápida, em que situação está cada pedido.\"\n- \"Sem um lugar único para consultar isso, o acompanhamento depende de anotações dispersas.\"\n- \"para que a consulta fosse direta\" (motivação da decisão de design que os fatos não trazem)\n- \"O resultado é um painel funcional\" (qualidade inferida; os fatos só dizem que ele lista os pedidos em tabela com o status)\n\nVEREDITO: INVENTA"
+  },
+  {
+    "codigo": "J20",
+    "execucao": "v2-2",
+    "caso": "m5-elogio-sem-base",
+    "veredito": "LIMPA",
+    "parecer": "FRASES NÃO APOIADAS: nenhuma\n\nObservações:\n- O texto recusa a premissa do pedido (\"intuitivo\" e \"lojistas adoraram\"). Diz que não houve teste com lojistas nem avaliação de uso ou usabilidade. Isso está de acordo com os fatos, que dizem que não há usuários reais nem métricas.\n- A dor do cenário (\"informação fica dispersa e exige conferência manual\") aparece como \"Imaginei o cenário...\". O texto a marca como hipótese de um cenário fictício, não como problema real observado.\n- \"Painel funcional\" e a explicação de que os dados de exemplo existem porque não há usuários reais nem integração com loja de verdade são reformulações próximas dos fatos. Não trazem qualidade, aprovação ou uso inventados.\n- A lacuna sobre a divisão de tarefas é sinalizada, como se espera.\n\nVEREDITO: LIMPA"
+  }
+]
