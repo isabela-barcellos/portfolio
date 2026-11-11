@@ -15,7 +15,7 @@ rascunho: false
 ---
 
 ## Problema
-Apoiar o processo de vendas com um agente de IA, construído em uma semana por uma equipe de quatro pessoas.
+O público-alvo são trabalhadores CLT, que em geral só conseguem tirar dúvidas fora do horário comercial, justamente quando o atendimento humano não está disponível. Manter atendentes em posições fixas também é um custo que existe mesmo quando ninguém os aciona. A proposta foi um agente de IA de vendas, disponível 24 horas por dia, todos os dias, construído em uma semana por uma equipe de quatro pessoas.
 
 ## Papel
 Atuação direta no desenvolvimento do agente, em quatro frentes:

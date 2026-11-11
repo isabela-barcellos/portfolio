@@ -28,5 +28,7 @@ Em um dia, a equipe de três pessoas construiu uma ferramenta de design com IA:
 ## Resultado
 Protótipo funcional construído no tempo do hackathon. Não há colocação ou métrica registrada.
 
+O que levei: era uma ideia de muito tempo que conseguimos tirar do papel em um dia, aplicando as estratégias de desenvolvimento com IA que o time já tem. Foi ali que vi o quanto a IA acelera o que já sabemos fazer.
+
 ## Sobre os detalhes
 Este projeto foi feito na empresa em que trabalho. Esta página descreve apenas a ideia e o que foi feito, sem detalhes internos.
