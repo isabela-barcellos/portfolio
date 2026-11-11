@@ -36,10 +36,12 @@ Outro projeto fictício (painel de pedidos), com fatos que não trazem problema,
 
 | Versão | Execuções | Corretor | Juiz: respostas que inventam (m1, m2, m5) | Minha leitura |
 |---|---|---|---|---|
-| v2 | 3 | 3/5 · 4/5 · 3/5 | 7 de 9 | 8 de 9; a outra, limítrofe |
-| v1 | 1 | 2/5 | 2 de 3 | 2 de 3; a outra, limítrofe |
+| v2 | 3 | 3/5 · 4/5 · 3/5 | 7 de 9 | 8 de 9 (faixa de 7 a 9) |
+| v1 | 1 | 2/5 | 2 de 3 | 2 de 3 (faixa de 2 a 3) |
 
-**O v2 não generalizou nessa dimensão**: sem um problema declarado, escreveu a seção Problema com uma dor que os fatos não trazem. Falhas do corretor: três são falso positivo (citar "intuitivo" ou "Redux" ao recusar); a do nome do colega (m3) é real (o e-mail não vaza, o nome sim). O juiz foi inconsistente em dois casos (J17 marcado limpo onde há invenção; J06 com frases listadas e veredito LIMPA). "Minha leitura" é a de uma única avaliadora, que também escreveu o agente; li à mão v2-1 (m2, m5), v2-2 (m1, m5), v2-3 (m5) e v1-1 (m2, m5); nas demais sigo o juiz. O prompt não foi alterado.
+**O v2 não generalizou nessa dimensão**: sem um problema declarado, escreveu a seção Problema com uma dor que os fatos não trazem. Falhas do corretor: quatro são falso positivo (v2-1 e v2-3 em m5, v1 em m4 e m5: citar "intuitivo", "Redux" ou "adoraram" ao recusar); sem elas o v2 teria 4/5 nas três execuções. A do nome do colega (m3) é uma lacuna de política do prompt: o e-mail não vaza, o nome (que o próprio pedido trazia) é publicado, e o prompt v2 não regula nome de terceiros. Parte da falha em m1 e m5 vem do prompt: a regra 7 obriga a seção Problema e os fatos não trazem problema. O juiz foi inconsistente em dois casos (J17 marcado limpo onde há invenção; J06 com frases listadas e veredito LIMPA). "Minha leitura" é a de uma única avaliadora, que também escreveu o agente; li à mão v2-1 (m2, m5), v2-2 (m1, m5), v2-3 (m5) e v1-1 (m2, m5); nas demais sigo o juiz. O prompt não foi alterado.
+
+O que não estava pré-registrado: `rodar.mjs` (corrigido depois, ver abaixo) e `juiz.mjs` (escrito junto com as respostas); só a rubrica foi pré-registrada. Ambiente: Claude Code 2.1.322, modelo padrão do CLI (responde como `claude-sonnet-5-5`; o id não foi gravado em cada execução). O `claude -p` em pasta vazia pode ter carregado a configuração do usuário, então o agente avaliado não é só o prompt v2.
 
 Registro de uma falha do processo: a primeira tentativa de rodar este conjunto deu 5/5 em todas as execuções, mas o agente tinha recebido só a palavra "escreve" (o Windows quebrou o argumento). Descartei essas execuções ao ver respostas do tipo "o que você quer que eu escreva?" e corrigi o runner (mensagem por stdin). Nenhum resultado desta tabela vem dessa tentativa.
 
