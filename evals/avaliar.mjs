@@ -10,15 +10,16 @@ import { entradaDo, verificar } from "./corretor.mjs";
 
 const dir = import.meta.dirname;
 const dados = JSON.parse(fs.readFileSync(path.join(dir, "casos.json"), "utf8"));
-const { fatos, prompts } = dados;
+const { prompts } = dados;
 const [, , modo, versao, conjuntoArg = "base", execucao] = process.argv;
 const conjunto = conjuntoArg;
+const fatos = conjunto === "base" ? dados.fatos : (dados.conjuntos?.[conjunto]?.fatos ?? dados.fatos);
 const casos = conjunto === "base" ? dados.casos : dados.conjuntos?.[conjunto]?.casos;
 if (!casos) throw new Error(`conjunto inexistente: ${conjunto}`);
 
 function conferirCongelado() {
   // Os casos novos só valem se o prompt v2 for exatamente o que foi congelado antes de eles serem respondidos.
-  if (conjunto !== "novos" || versao !== "v2") return;
+  if (conjunto === "base" || versao !== "v2") return;
   const { sha256 } = JSON.parse(fs.readFileSync(path.join(dir, "congelado.json"), "utf8"));
   const atual = crypto.createHash("sha256").update(prompts.v2).digest("hex");
   if (atual !== sha256) throw new Error("O prompt v2 mudou depois de congelado: os casos novos não provam mais generalização.");
