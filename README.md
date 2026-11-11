@@ -43,10 +43,6 @@ O teste de acessibilidade usa `playwright-core` e precisa de um Chrome/Chromium.
 
 Em `evals/` há uma avaliação pequena de um agente de redação (8 casos adversariais com dados fictícios, correção por regras, testes do próprio corretor e 4 casos novos rodados com o prompt congelado). O resultado, com as falhas reais de cada versão do prompt e os limites do método, está em [`evals/README.md`](evals/README.md) e na página "Como foi feito".
 
-## Versão em inglês
-
-`/en/` traz o topo do portfólio em inglês (hero, números, experiência, competências e contato). Os cases continuam em português, e a página avisa isso. Há um botão de idioma na barra do topo e `hreflang` entre a Home e `/en/`.
-
 ## Licença
 
 Todos os direitos reservados (ver [`LICENSE`](LICENSE)): o repositório é público para leitura e avaliação, sem licença de reutilização. É uma decisão deliberada e reversível: abrir para uma licença livre depois é trocar o arquivo; uma licença livre já concedida não se desfaz.

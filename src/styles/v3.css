@@ -13,12 +13,9 @@
 .name__full { display: none; }
 @media (min-width: 480px) { .name__short { display: none; } .name__full { display: inline; } }
 /* Em telas muito estreitas o botão de idioma sai da barra e vai para dentro do menu (o nome precisa de espaço). */
-.pf-menu__lang { display: none; }
 @media (max-width: 479px) {
   .pf-nav__right { gap: var(--space-2); }
   .pf-nav .name { font-size: 14px; }
-  .pf-lang { display: none; }
-  .pf-menu__lang { display: list-item; }
 }
 .pf-nav ul a { border-radius: 999px; }
 .pf-menu summary { border-radius: 999px; }

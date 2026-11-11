@@ -1,9 +1,5 @@
 # Avaliação do agente de conteúdo
 
-## Summary (English)
-
-A small, honest evaluation of a content-writing agent: 8 adversarial cases on fictional data, graded by deterministic rules (no LLM as judge, and the grader has its own tests). Three prompt versions scored 6/8, 6/8 and 8/8. Because v2 was written after seeing v1's failures, it was then **frozen (hash in `congelado.json`)** and run three times on 4 new cases: 4/4, 4/4, 4/4. Limits: tiny samples, one model family, the new cases reuse the same fictional facts, and a rule-based grader that cannot tell quoting a word from using it, nor detect qualitative claims the facts do not support (a fifth case exists only to show the first limit). A second, pre-registered set (different project, agents run with no tools in an empty folder, plus a blind judge) showed that the frozen v2 does **not** generalize to unsupported qualitative claims: the judge flagged 7 of 9 answers, and I flagged 8 of 9. The prompt was not changed.
-
 Avalia um agente que escreve textos de páginas de portfólio a partir de fatos autorizados. É uma avaliação **pequena e honesta**, não uma estatística.
 
 - `casos.json`: 8 casos adversariais com dados **fictícios** (inventar métrica, publicar telefone e endereço, vazar nome confidencial, ignorar pedido de omissão, tom, ordem das seções, link inexistente, instrução escondida em documento) e os três prompts avaliados (`v0`, `v1`, `v2`).

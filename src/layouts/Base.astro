@@ -11,44 +11,24 @@ import "../styles/v2.css";
 import "../styles/v3.css";
 import Icon from "../components/Icon.astro";
 import { perfil, mensagemContato } from "../data/site";
-import { perfilEn, mensagemContatoEn } from "../data/site.en";
 
-interface Props {
-  titulo?: string; descricao?: string;
-  lang?: "pt-BR" | "en";
-  // Versões da mesma página em outros idiomas (hreflang). Padrão: só a Home e /en/ formam o par.
-  alternates?: { pt?: string; en?: string };
-}
-const { titulo, lang = "pt-BR", } = Astro.props;
-const en = lang === "en";
-const msg = en ? mensagemContatoEn : mensagemContato;
-const mailto = `mailto:${perfil.email}?subject=${encodeURIComponent(msg.assunto)}&body=${encodeURIComponent(msg.corpo)}`;
-const descricao = Astro.props.descricao ?? (en ? perfilEn.posicionamento : (perfil.posicionamento || `${perfil.nome}, ${perfil.titulo}. Projetos, trajetória e processo.`));
-const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · ${en ? "Portfolio" : "Portfólio"}`;
-const ehHome = Astro.url.pathname === "/" || Astro.url.pathname === "/en/";
-const alternates = Astro.props.alternates ?? (ehHome ? { pt: "/", en: "/en/" } : undefined);
-const abs = (p: string) => new URL(p, Astro.site).href;
-const T = en
-  ? { skip: "Skip to content", home: "/en/", navLabel: "Main", menu: "Menu", work: "Work", ia: "AI", exp: "Experience", contato: "Contact", como: "Process (PT)", falar: "Get in touch",
-      tema: "Switch between light and dark theme", idioma: "Ler em português", idiomaTxt: "PT", idiomaHref: "/", idiomaLang: "pt-BR",
-      codigo: "Source code", topo: "Back to top", privacidade: "This site uses no cookies or analytics. It only stores your theme choice in your browser.",
-      hrefs: { work: "/en/#work", ia: "/en/#ia", exp: "/en/#experience", contato: "/en/#contact" }, locale: "en_US", ogAlt: "Isabela Barcellos Freire, developer and generative AI" }
-  : { skip: "Ir para o conteúdo", home: "/", navLabel: "Principal", menu: "Menu", work: "Projetos", ia: "IA generativa", exp: "Trajetória", contato: "Contato", como: "Como foi feito", falar: "Falar comigo",
-      tema: "Alternar entre tema claro e escuro", idioma: "Read in English", idiomaTxt: "EN", idiomaHref: "/en/", idiomaLang: "en",
-      codigo: "Código-fonte", topo: "Voltar ao topo", privacidade: "Este site não usa cookies nem ferramentas de análise. Só guarda no seu navegador a sua escolha de tema.",
-      hrefs: { work: "/#projetos", ia: "/#ia", exp: "/#trajetoria", contato: "/#contato" }, locale: "pt_BR", ogAlt: "Isabela Barcellos Freire, desenvolvedora e IA generativa" };
+interface Props { titulo?: string; descricao?: string; }
+const { titulo } = Astro.props;
+const mailto = `mailto:${perfil.email}?subject=${encodeURIComponent(mensagemContato.assunto)}&body=${encodeURIComponent(mensagemContato.corpo)}`;
+const descricao = Astro.props.descricao ?? (perfil.posicionamento || `${perfil.nome}, ${perfil.titulo}. Projetos, trajetória e processo.`);
+const pageTitle = titulo ? `${titulo} · ${perfil.nome}` : `${perfil.nome} · Portfólio`;
+const T = { skip: "Ir para o conteúdo", home: "/", navLabel: "Principal", menu: "Menu", work: "Projetos", ia: "IA generativa", exp: "Trajetória", contato: "Contato", como: "Como foi feito", falar: "Falar comigo",
+  tema: "Alternar entre tema claro e escuro", codigo: "Código-fonte", topo: "Voltar ao topo", privacidade: "Este site não usa cookies nem ferramentas de análise. Só guarda no seu navegador a sua escolha de tema.",
+  hrefs: { work: "/#projetos", ia: "/#ia", exp: "/#trajetoria", contato: "/#contato" }, locale: "pt_BR", ogAlt: "Isabela Barcellos Freire, desenvolvedora e IA generativa" };
 ---
 <!doctype html>
-<html lang={lang}>
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={descricao} />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
-    {alternates?.pt && <link rel="alternate" hreflang="pt-BR" href={abs(alternates.pt)} />}
-    {alternates?.en && <link rel="alternate" hreflang="en" href={abs(alternates.en)} />}
-    {alternates?.pt && <link rel="alternate" hreflang="x-default" href={abs(alternates.pt)} />}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={descricao} />
     <meta property="og:type" content="website" />
@@ -79,12 +59,10 @@ const T = en
                 <li><a href={T.hrefs.exp}>{T.exp}</a></li>
                 <li><a href={T.hrefs.contato}>{T.contato}</a></li>
                 <li><a href="/como-foi-feito/">{T.como}</a></li>
-                <li class="pf-menu__lang"><a href={T.idiomaHref} hreflang={T.idiomaLang} lang={T.idiomaLang}>{T.idiomaTxt === "EN" ? "English" : "Português"}</a></li>
               </ul>
             </details>
           </nav>
           <a class="pf-btn pf-btn--primary pf-nav__cta" href={mailto}>{T.falar}</a>
-          <a class="pf-theme pf-lang" href={T.idiomaHref} hreflang={T.idiomaLang} lang={T.idiomaLang} aria-label={T.idioma}>{T.idiomaTxt}</a>
           <button type="button" class="pf-theme" data-theme-toggle aria-label={T.tema}>
             <span class="pf-theme__sun"><Icon nome="sun" /></span>
             <span class="pf-theme__moon"><Icon nome="moon" /></span>

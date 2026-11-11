@@ -9,8 +9,6 @@
 .pf-nav__right { display: flex; align-items: center; gap: var(--space-3); }
 .pf-theme { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-strong); background: transparent; color: var(--ink); cursor: pointer; }
 .pf-theme:hover { background: var(--surface-300); }
-.pf-lang { text-decoration: none; font: 500 13px/1 var(--mono); letter-spacing: .02em; }
-.pf-lang:hover { color: var(--ink); }
 /* Padrão escuro: mostra o sol (para ir ao claro). No claro: mostra a lua. */
 .pf-theme__moon { display: none; }
 :root[data-theme="light"] .pf-theme__sun { display: none; }

@@ -51,6 +51,11 @@
       ],
       "destination": "https://isabela-barcellos.vercel.app/$1",
       "statusCode": 301
+    },
+    {
+      "source": "/en/:path*",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }
