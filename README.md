@@ -2,7 +2,7 @@
 
 Site estático em [Astro](https://astro.build) com design system próprio, textos curtos e detalhes só ao clicar. Foi construído por orquestração de agentes de IA (Claude Code e Maestri) com validação humana, e o próprio repositório mostra o método: verificações automáticas decidem o que pode ir ao ar.
 
-Site: https://isabela-barcellos.vercel.app
+Site: https://isabela-barcellos-portifolio.vercel.app
 
 ## O que tem aqui
 

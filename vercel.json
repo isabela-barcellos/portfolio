@@ -49,7 +49,18 @@
           "value": "portifolio-six-pi-27.vercel.app"
         }
       ],
-      "destination": "https://isabela-barcellos.vercel.app/$1",
+      "destination": "https://isabela-barcellos-portifolio.vercel.app/$1",
+      "statusCode": 301
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "isabela-barcellos.vercel.app"
+        }
+      ],
+      "destination": "https://isabela-barcellos-portifolio.vercel.app/$1",
       "statusCode": 301
     },
     {

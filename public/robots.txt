@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://isabela-barcellos.vercel.app/sitemap.xml
+Sitemap: https://isabela-barcellos-portifolio.vercel.app/sitemap.xml
