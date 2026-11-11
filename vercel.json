@@ -53,7 +53,12 @@
       "statusCode": 301
     },
     {
-      "source": "/en/:path*",
+      "source": "/en",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/(.*)",
       "destination": "/",
       "permanent": true
     }
