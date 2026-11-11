@@ -16,7 +16,7 @@ const evalLinhas = [
 const novosLinhas = [
   { v: "v0", execs: ["novos-v0"], leitura: "A falha é real: publicou o e-mail de uma colega." },
   { v: "v1", execs: ["novos-v1"], leitura: "As 2 falhas são do corretor: o agente recusou o cargo inflado e o comparativo inventado, mas citou os termos ao explicar. O comportamento estava correto." },
-  { v: "v2", execs: ["novos-v2-1", "novos-v2-2", "novos-v2-3"], leitura: "Sem falhas e sem variação entre as 3 execuções." },
+  { v: "v2", execs: ["novos-v2-1", "novos-v2-2", "novos-v2-3"], leitura: "Sem falhas no corretor nas 3 execuções. O placar não variou, mas o texto variou." },
 ].map((l) => ({ ...l, execucoes: l.execs.length, placares: l.execs.map((n) => placar(n).texto).join(" · ") }));
 
 // Texto escrito a partir do que aconteceu neste projeto. Descreve o método, sem publicar prompts.
@@ -111,7 +111,7 @@ const aprendizados = [
             </tbody>
           </table>
         </div>
-        <p class="muted"><strong>Limites:</strong> são 8 casos na primeira rodada e 4 nos novos: um sinal, não uma estatística. Nos casos novos, o que distingue o v2 do v1 é não repetir os termos recusados; nenhum dos dois inventou fatos. O corretor é por regras e não distingue citar de usar uma palavra. Um quinto caso (listar as palavras proibidas) existe só para mostrar esse limite e não entra no placar: o corretor o reprova nas três execuções do v2, e, na minha leitura, o agente apenas listou as palavras, sem emoji nem exclamação. O agente avaliado é um modelo Claude. Isto avalia um agente de redação; os testes do verificador de vazamento, descritos acima, são outra coisa: testam uma barreira de segurança.</p>
+        <p class="muted"><strong>Limites:</strong> são 8 casos na primeira rodada e 4 nos novos: um sinal, não uma estatística. Os casos novos usam o mesmo projeto fictício e os mesmos fatos: variam a pressão, não o contexto. O que distingue o v2 do v1 neles é não repetir os termos recusados, e o v2 tem uma regra escrita justamente contra esse comportamento, então passar era esperado. Nem o v1 nem o v2 inventaram números, datas, links ou dados pessoais, mas os dois preencheram a seção Problema com uma afirmação qualitativa que os fatos não trazem ("responder uma a uma consome tempo"), e o v2 citou o nome da colega sem o e-mail. O corretor só procura números, datas, links e termos listados, então não vê esse tipo de invenção. Ele também não distingue citar de usar uma palavra. Um quinto caso (listar as palavras proibidas) existe só para mostrar esse limite e não entra no placar: o corretor o reprova nas três execuções do v2, e, na minha leitura, o agente apenas listou as palavras, sem emoji nem exclamação. O congelamento prova que o prompt do v2 não mudou, não a ordem em que escrevi os casos e rodei os agentes (está tudo num mesmo commit), e os agentes rodaram com acesso ao repositório, onde ficam as regras de correção, embora instruídos a não lê-las. O agente avaliado é um modelo Claude. Isto avalia um agente de redação; os testes do verificador de vazamento, descritos acima, são outra coisa: testam uma barreira de segurança.</p>
         <div class="pf-actions" style="margin-top: 0">
           <a class="pf-btn pf-btn--secondary" href={`${perfil.repositorio}/tree/main/evals`} rel="noopener"><Icon nome="github" tamanho={18} /> Ver casos e respostas</a>
         </div>

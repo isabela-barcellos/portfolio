@@ -2,7 +2,7 @@
 
 ## Summary (English)
 
-A small, honest evaluation of a content-writing agent: 8 adversarial cases on fictional data, graded by deterministic rules (no LLM as judge, and the grader has its own tests). Three prompt versions scored 6/8, 6/8 and 8/8. Because v2 was written after seeing v1's failures, it was then **frozen (hash in `congelado.json`)** and run three times on 4 new cases: 4/4, 4/4, 4/4. Limits: tiny samples, one model family, and a rule-based grader that cannot tell quoting a word from using it (a fifth case exists only to show this).
+A small, honest evaluation of a content-writing agent: 8 adversarial cases on fictional data, graded by deterministic rules (no LLM as judge, and the grader has its own tests). Three prompt versions scored 6/8, 6/8 and 8/8. Because v2 was written after seeing v1's failures, it was then **frozen (hash in `congelado.json`)** and run three times on 4 new cases: 4/4, 4/4, 4/4. Limits: tiny samples, one model family, the new cases reuse the same fictional facts, and a rule-based grader that cannot tell quoting a word from using it, nor detect qualitative claims the facts do not support (a fifth case exists only to show the first limit).
 
 Avalia um agente que escreve textos de páginas de portfólio a partir de fatos autorizados. É uma avaliação **pequena e honesta**, não uma estatística.
 
@@ -27,12 +27,14 @@ Escritos **depois** de o prompt v2 ficar pronto, sem ajustá-lo a eles. O hash d
 |---|---|---|---|
 | v0 | 1 | 3/4 | a falha é real: publicou o e-mail de uma colega |
 | v1 | 1 | 2/4 | as 2 falhas são do corretor: o agente recusou o cargo inflado e o comparativo inventado, mas citou os termos ao explicar; o comportamento estava correto |
-| v2 | 3 | 4/4 · 4/4 · 4/4 | sem falhas e sem variação entre as execuções |
+| v2 | 3 | 4/4 · 4/4 · 4/4 | sem falhas no corretor; o placar não variou, mas o texto variou |
 
 O quinto caso (`n5-limite-citar-vs-usar`) pede para **listar** as palavras proibidas e não entra no placar: o corretor o reprova (cita as palavras), e na leitura humana as respostas não têm emoji nem exclamação. Existe para documentar o limite do corretor.
 
 ## Limites (importantes)
-- 8 casos (e 4 novos) e poucas execuções: é um sinal, não uma medida estatística. Nas três execuções do v2 nos casos novos não houve variação, mas três execuções não bastam para afirmar estabilidade.
-- O **v2 foi escrito depois de ver as falhas do v1**; por isso os casos novos e o prompt congelado. Nos casos novos, o que distingue o v2 do v1 é não repetir os termos recusados; nenhum dos dois inventou fatos.
+- 8 casos (e 4 novos) e poucas execuções: é um sinal, não uma medida estatística. Nas três execuções do v2 nos casos novos o placar não variou, mas o texto variou; três execuções não bastam para afirmar estabilidade.
+- O **v2 foi escrito depois de ver as falhas do v1**; por isso os casos novos e o prompt congelado. Os casos novos usam o **mesmo projeto fictício e os mesmos fatos**: variam a pressão, não o contexto. O que distingue o v2 do v1 neles é não repetir os termos recusados, e o v2 tem uma regra escrita contra esse comportamento, então passar era esperado.
+- **Invenção qualitativa passa despercebida.** Nem o v1 nem o v2 inventaram números, datas, links ou dados pessoais, mas ambos preencheram a seção Problema com uma afirmação que os fatos não trazem ("responder uma a uma consome tempo"); o corretor só procura números, datas, links e termos listados. Além disso, o v2 citou o nome de uma colega (sem o e-mail): o prompt cobre e-mail, telefone e endereço de terceiros, não o nome.
+- O congelamento (hash em `congelado.json`) prova que o prompt do v2 não mudou; **não prova a ordem** em que os casos foram escritos e rodados (tudo no mesmo commit), e os agentes tinham acesso ao repositório, onde ficam as regras de correção, embora instruídos a não lê-las.
 - O corretor é por regras: não distingue citar de usar uma palavra (foi o que reprovou o v1 no caso de tom) e não avalia qualidade do texto.
 - Isto avalia um **agente de redação**. Os testes do verificador de vazamento (`tests/verificador.test.mjs`) são outra coisa: testam uma barreira de segurança, não um modelo.
